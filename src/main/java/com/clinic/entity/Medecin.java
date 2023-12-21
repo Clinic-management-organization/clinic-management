@@ -1,27 +1,36 @@
 package com.clinic.entity;
 
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
+import com.clinic.entity.Embedded.Horraire;
 import com.clinic.entity.Enum.GenderType;
 
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Patient {
+public class Medecin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,21 +39,15 @@ public class Patient {
     @Column(nullable = false)
     private String nom;
 
-    @Column(nullable = false)
-    private String prenom;
+    private String adresse;
+    private String tel;
+    
+    @ElementCollection
+    @CollectionTable(name = "medecin_horraire", joinColumns = @JoinColumn(name = "medecin_id"))
+    @Column(name = "horraire")
+    private List<Horraire> horraires; // Liste des horraires disponible pour un medecin
 
-    @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
-    private Date dateNaissance;
     @Enumerated(EnumType.STRING)
     private GenderType sexe;
-    private String adresse;
-    private String situationFamilliale;
-    private String assuranceMedicale;
-    private String tel;
-    private String email;
-    /*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "dossier_medical_id", referencedColumnName = "id")
-    private DossierMedical dossierMedical;*/
-}
 
+}

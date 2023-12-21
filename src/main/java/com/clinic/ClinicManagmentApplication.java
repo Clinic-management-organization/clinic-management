@@ -7,9 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ClinicManagmentApplication {
 
 	public static void main(String[] args) {
-		System.out.print("hello");
 		SpringApplication.run(ClinicManagmentApplication.class, args);
-	}
-//ameni
-	
+	}	
 }
