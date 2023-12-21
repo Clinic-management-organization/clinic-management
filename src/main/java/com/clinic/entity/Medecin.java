@@ -7,6 +7,8 @@ import java.util.List;
 
 import com.clinic.entity.Embedded.Horraire;
 import com.clinic.entity.Enum.GenderType;
+import com.clinic.entity.Enum.ServiceType;
+import com.clinic.entity.Enum.SpecialiteType;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -49,5 +51,10 @@ public class Medecin {
 
     @Enumerated(EnumType.STRING)
     private GenderType sexe;
+    @Enumerated(EnumType.STRING)
+    private ServiceType service;
+    @Enumerated(EnumType.STRING)
+    private SpecialiteType specialite;
+
 
 }
