@@ -1,8 +1,7 @@
 package com.clinic.entity;
 
-import java.util.Date;
-
-import com.clinic.entity.Enum.EtatRDV;
+import java.time.DayOfWeek;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,30 +20,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RendezVous {
 
+public class Horaire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "start_time")
+    private LocalTime startTime; // Heure de début
 
+    @Column(name = "end_time")
+    private LocalTime endTime; // Heure de fin
 
+    @Column(name = "day_of_week")
     @Enumerated(EnumType.STRING)
-    private EtatRDV etatRendezVous;
+    private DayOfWeek dayOfWeek; // Jour de la semaine
 
-    
-    private Date dateRendezVous; // date de la rendez vous par jour et heure
-
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "medecin_id")
     private Medecin medecin;
-
-    @Column(columnDefinition = "TEXT")
-    private String remarques;
-
-    private String motif; // Motif du rendez-vous 
-
 }
