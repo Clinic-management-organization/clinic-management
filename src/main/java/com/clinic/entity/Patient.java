@@ -19,7 +19,9 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
@@ -28,7 +30,9 @@ import lombok.NoArgsConstructor;
 
 public class Patient extends Utilisateur {
 
-    @Id
+  
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String situationFamilliale;
@@ -36,5 +40,8 @@ public class Patient extends Utilisateur {
     
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RendezVous> RDVs;
+    
+   
+	
 }
 
