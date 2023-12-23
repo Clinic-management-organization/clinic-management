@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.clinic.dao.RendezVousDAO;
 import com.clinic.entity.RendezVous;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.RendezVousMetier;
 
+@Service
 public class RendezVousMetierImpl implements RendezVousMetier {
 	
 	 private final RendezVousDAO rendezVousDAO;
