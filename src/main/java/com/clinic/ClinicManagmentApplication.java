@@ -2,7 +2,6 @@ package com.clinic;
 
 import java.util.Date;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -15,7 +14,6 @@ import com.clinic.entity.Patient;
 import com.clinic.entity.RendezVous;
 import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.entity.Enum.GenderType;
-import com.clinic.entity.Enum.MotifType;
 import com.clinic.entity.Enum.RoleType;
 import com.clinic.entity.Enum.SpecialiteType;
 

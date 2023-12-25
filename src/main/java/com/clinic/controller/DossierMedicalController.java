@@ -28,6 +28,11 @@ public class DossierMedicalController {
         return new ResponseEntity<>(dossiersMedicals, HttpStatus.OK);
     }
 
+    @GetMapping("/patient/{patientId}")
+       public List<DossierMedical> getDossiersMedicauxByPatientId(@PathVariable Long patientId) {
+           return dossierMedicalMetier.getDossiersMedicauxByPatientId(patientId);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<DossierMedical> getDossierMedicalById(@PathVariable Long id) throws NotFoundException {
         DossierMedical dossierMedical = dossierMedicalMetier.getDossierMedicalById(id);
