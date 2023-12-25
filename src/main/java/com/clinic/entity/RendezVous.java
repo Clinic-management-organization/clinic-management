@@ -42,15 +42,19 @@ public class RendezVous {
     @ManyToOne
     @JoinColumn(name = "patient_id") 
     private Patient patient;
-
-    @ManyToOne
-    @JoinColumn(name = "medecin_id")
-    @JsonManagedReference
-    private Medecin medecin;
-
     @Column(columnDefinition = "TEXT")
     private String remarques;
 
     private String motif; // Motif du rendez-vous 
+    
+    @ManyToOne
+    @JoinColumn(name = "medecin_id")
+    @JsonManagedReference
+    private Medecin medecin;
+    
+    @ManyToOne
+    @JoinColumn(name = "dossierMedical_id")
+    @JsonManagedReference
+    private DossierMedical dossierMedical;
 
 }
