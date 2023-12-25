@@ -1,6 +1,7 @@
 package com.clinic.controller;
 
 import com.clinic.entity.RendezVous;
+import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.RendezVousMetier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,17 @@ public class RendezVousController {
         return new ResponseEntity<>(updatedRendezVous, HttpStatus.OK);
     }
 
+    
+    @PutMapping("/updateEtat/{id}")
+    public ResponseEntity<RendezVous> updateEtatRendezVous(@PathVariable Long id, @RequestBody EtatRDV newEtat) throws NotFoundException {
+        RendezVous existingRendezVous = rendezVousMetier.getRendezVousById(id);
+
+        existingRendezVous.setEtatRendezVous(newEtat);
+
+        RendezVous updatedRendezVous = rendezVousMetier.updateRendezVous(existingRendezVous);
+        return new ResponseEntity<>(updatedRendezVous, HttpStatus.OK);
+    }
+    
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteRendezVous(@PathVariable Long id) throws NotFoundException {
         rendezVousMetier.deleteRendezVous(id);
