@@ -46,4 +46,12 @@ public interface DossierMedicalMetier {
      * @throws DossierMedicalNotFoundException Si le dossier médical n'est pas trouvé.
      */
     void deleteDossierMedical(Long id) ;
+    
+    /**
+     * Récupère la liste de tous les dossiers médicaux relative a un patient.
+     *
+     * @param id L'identifiant d'un patient.
+     * @throws DossierMedicalNotFoundException Si le dossier médical n'est pas trouvé.
+     */
+    List<DossierMedical> getDossiersMedicauxByPatientId(Long patientId);
 }
