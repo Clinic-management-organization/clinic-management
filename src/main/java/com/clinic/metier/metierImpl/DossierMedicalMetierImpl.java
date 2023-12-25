@@ -20,8 +20,8 @@ public class DossierMedicalMetierImpl implements DossierMedicalMetier{
 	        this.dossierMedicalDAO = dossierMedicalDAO;
 	    }
 	    @Override
-	    public List<DossierMedical> getDossiersMedicauxByPatientId(Long patientId) {
-	        return dossierMedicalDAO.findByPatientId(patientId);
+	    public List<DossierMedical> getDossiersMedicauxByPatientId(Long id) {
+	        return dossierMedicalDAO.findDossierMedicalsByPatientId(id);
 	    }
 	    @Override
 	    public DossierMedical saveDossierMedical(DossierMedical dossierMedical) {
