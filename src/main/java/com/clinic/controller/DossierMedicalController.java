@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/dossiersMedicaux")
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/dossiers-medicaux")
 public class DossierMedicalController {
 
     private final DossierMedicalMetier dossierMedicalMetier;
