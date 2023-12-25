@@ -12,6 +12,7 @@ import com.clinic.exception.NotFoundException;
 import com.clinic.metier.MedecinMetier;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/medecins")
 public class MedecinController {
 

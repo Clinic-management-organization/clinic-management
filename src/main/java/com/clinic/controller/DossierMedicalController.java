@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/dossiersMedicaux")
+@CrossOrigin(origins = "http://localhost:3000")
 public class DossierMedicalController {
 
     private final DossierMedicalMetier dossierMedicalMetier;
@@ -25,6 +26,11 @@ public class DossierMedicalController {
     public ResponseEntity<List<DossierMedical>> getAllDossiersMedicals() {
         List<DossierMedical> dossiersMedicals = dossierMedicalMetier.getAllDossiersMedicals();
         return new ResponseEntity<>(dossiersMedicals, HttpStatus.OK);
+    }
+
+    @GetMapping("/patient/{patientId}")
+       public List<DossierMedical> getDossiersMedicauxByPatientId(@PathVariable Long patientId) {
+           return dossierMedicalMetier.getDossiersMedicauxByPatientId(patientId);
     }
 
     @GetMapping("/{id}")

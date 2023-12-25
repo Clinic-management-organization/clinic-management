@@ -1,6 +1,7 @@
 package com.clinic.controller;
 
 import com.clinic.entity.RendezVous;
+import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.RendezVousMetier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/rendez-vous")
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/api/rendezvous")
 public class RendezVousController {
 
     private final RendezVousMetier rendezVousMetier;
@@ -32,7 +34,15 @@ public class RendezVousController {
         RendezVous rendezVous = rendezVousMetier.getRendezVousById(id);
         return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
-
+    @GetMapping("/medecin/{medecinId}")
+    public List<RendezVous> getRendezVousByMedecin(@PathVariable Long medecinId) {
+        return rendezVousMetier.getRendezVousByMedecin(medecinId);
+    }
+    
+    @GetMapping("/patient/{patientId}")
+    public List<RendezVous> getRendezVousByPatient(@PathVariable Long patientId) {
+        return rendezVousMetier.getRendezVousByPatient(patientId);
+    } 
     @PostMapping
     public ResponseEntity<RendezVous> saveRendezVous(@RequestBody RendezVous rendezVous) {
         RendezVous savedRendezVous = rendezVousMetier.saveRendezVous(rendezVous);
@@ -46,6 +56,17 @@ public class RendezVousController {
         return new ResponseEntity<>(updatedRendezVous, HttpStatus.OK);
     }
 
+    
+    @PutMapping("/updateEtat/{id}")
+    public ResponseEntity<RendezVous> updateEtatRendezVous(@PathVariable Long id, @RequestBody EtatRDV newEtat) throws NotFoundException {
+        RendezVous existingRendezVous = rendezVousMetier.getRendezVousById(id);
+
+        existingRendezVous.setEtatRendezVous(newEtat);
+
+        RendezVous updatedRendezVous = rendezVousMetier.updateRendezVous(existingRendezVous);
+        return new ResponseEntity<>(updatedRendezVous, HttpStatus.OK);
+    }
+    
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteRendezVous(@PathVariable Long id) throws NotFoundException {
         rendezVousMetier.deleteRendezVous(id);

@@ -1,8 +1,10 @@
-package com.clinic;
+package com.clinic.config;
 
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.clinic.ClinicManagmentApplication;
 
 @SpringBootApplication
 public class SwaggerConfig {
