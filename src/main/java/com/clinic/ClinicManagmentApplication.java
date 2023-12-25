@@ -9,9 +9,13 @@ import org.springframework.context.ApplicationContext;
 
 import com.clinic.dao.MedecinDAO;
 import com.clinic.dao.PatientDAO;
+import com.clinic.dao.RendezVousDAO;
 import com.clinic.entity.Medecin;
 import com.clinic.entity.Patient;
+import com.clinic.entity.RendezVous;
+import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.entity.Enum.GenderType;
+import com.clinic.entity.Enum.MotifType;
 import com.clinic.entity.Enum.RoleType;
 import com.clinic.entity.Enum.SpecialiteType;
 
@@ -81,12 +85,33 @@ public class ClinicManagmentApplication {
 				patient2.setSituationFamilliale("married");
         		patient2.setRDVs(null);   // Set the list of RDVs
 
+        RendezVous rdv = new RendezVous();
+        		rdv.setDateRendezVous(new Date());
+        		rdv.setEtatRendezVous(EtatRDV.RAPPORTEE);
+        		rdv.setMedecin(medecin1);
+        		rdv.setPatient(patient1);
+       RendezVous rdv2 = new RendezVous();
+         		rdv2.setDateRendezVous(new Date());
+         		rdv2.setEtatRendezVous(EtatRDV.RAPPORTEE);
+         		rdv2.setMedecin(medecin1);
+         		rdv2.setPatient(patient2);
+       RendezVous rdv3 = new RendezVous();
+		       rdv3.setDateRendezVous(new Date());
+		       rdv3.setEtatRendezVous(EtatRDV.RAPPORTEE);
+		       rdv3.setMedecin(medecin2);
+		       rdv3.setPatient(patient2);
         MedecinDAO medecinDAO=ctx.getBean(MedecinDAO.class);
         PatientDAO patientDAO=ctx.getBean(PatientDAO.class);
+        RendezVousDAO rdvDAO=ctx.getBean(RendezVousDAO.class);
+        
 		medecinDAO.save(medecin1);
         medecinDAO.save(medecin2);
         patientDAO.save(patient1);
         patientDAO.save(patient2);
+        rdvDAO.save(rdv); 
+        rdvDAO.save(rdv2); 
+        rdvDAO.save(rdv3);
+        
 	}	
 	
 }

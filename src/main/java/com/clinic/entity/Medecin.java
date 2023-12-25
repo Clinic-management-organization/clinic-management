@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.clinic.entity.Enum.GenderType;
 import com.clinic.entity.Enum.SpecialiteType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -31,14 +33,16 @@ public class Medecin extends Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private GenderType sexe;
+   
     @Enumerated(EnumType.STRING)
     private SpecialiteType specialite;
 
 
     @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Horaire> horaires; // Liste des horraires disponible pour un medecin
+    
+    @JsonManagedReference
     @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    
     private List<RendezVous> RDVs;
 }

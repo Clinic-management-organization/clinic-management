@@ -29,6 +29,8 @@ public interface RendezVousMetier {
      * @return La liste de tous les rendez-vous.
      */
     List<RendezVous> getAllRendezVous();
+    List<RendezVous> getRendezVousByMedecin(Long medecinId);
+    List<RendezVous> getRendezVousByPatient(Long patientId);
 
     /**
      * Met à jour les informations d'un rendez-vous.

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.clinic.entity.Enum.GenderType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -38,6 +40,8 @@ public class Patient extends Utilisateur {
     private String situationFamilliale;
     private String assuranceMedicale;
     
+    
+    @JsonManagedReference
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RendezVous> RDVs;
     

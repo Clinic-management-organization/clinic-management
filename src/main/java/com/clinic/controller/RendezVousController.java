@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/rendez-vous")
+@RequestMapping("/api/rendezvous")
 public class RendezVousController {
 
     private final RendezVousMetier rendezVousMetier;
@@ -33,7 +33,15 @@ public class RendezVousController {
         RendezVous rendezVous = rendezVousMetier.getRendezVousById(id);
         return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
-
+    @GetMapping("/medecin/{medecinId}")
+    public List<RendezVous> getRendezVousByMedecin(@PathVariable Long medecinId) {
+        return rendezVousMetier.getRendezVousByMedecin(medecinId);
+    }
+    
+    @GetMapping("/patient/{patientId}")
+    public List<RendezVous> getRendezVousByPatient(@PathVariable Long patientId) {
+        return rendezVousMetier.getRendezVousByPatient(patientId);
+    } 
     @PostMapping
     public ResponseEntity<RendezVous> saveRendezVous(@RequestBody RendezVous rendezVous) {
         RendezVous savedRendezVous = rendezVousMetier.saveRendezVous(rendezVous);

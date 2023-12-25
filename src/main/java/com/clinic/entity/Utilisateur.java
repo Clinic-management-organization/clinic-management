@@ -39,7 +39,6 @@ public class Utilisateur implements Serializable {
     @Column(nullable = false)
     private String prenom;
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
     private Date dateNaissance;
     @Enumerated(EnumType.STRING)
     private GenderType sexe;

@@ -47,6 +47,15 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	    }
 
 	    @Override
+	    public List<RendezVous> getRendezVousByMedecin(Long medecinId) {
+	        return rendezVousDAO.findByMedecinId(medecinId);
+	    }
+	    
+	    @Override
+	    public List<RendezVous> getRendezVousByPatient(Long patientId) {
+	        return rendezVousDAO.findByPatientId(patientId);
+	    }
+	    @Override
 	    public void deleteRendezVous(Long id) throws NotFoundException {
 	        if (!rendezVousDAO.existsById(id)) {
 	            throw new NotFoundException("RendezVous not found with id: " + id);

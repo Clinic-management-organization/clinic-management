@@ -3,6 +3,9 @@ package com.clinic.entity;
 import java.util.Date;
 
 import com.clinic.entity.Enum.EtatRDV;
+import com.clinic.entity.Enum.MotifType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,12 +38,14 @@ public class RendezVous {
     
     private Date dateRendezVous; // date de la rendez vous par jour et heure
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id") 
     private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "medecin_id")
+    @JsonManagedReference
     private Medecin medecin;
 
     @Column(columnDefinition = "TEXT")
