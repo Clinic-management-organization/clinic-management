@@ -10,9 +10,8 @@ import com.clinic.entity.DossierMedical;
 
 
 public interface DossierMedicalDAO extends JpaRepository<DossierMedical, Long>{
-	 @Query("SELECT dm FROM DossierMedical dm " +
-	            "JOIN dm.rdvs rdv " +
-	            "JOIN rdv.patient p " +
-	            "WHERE dm.id = rdv.dossierMedical.id AND p.id = :patientId")
-	    List<DossierMedical> findDossierMedicalsByPatientId(@Param("patientId") Long patientId);
+	
+	 /*@Query("SELECT dm FROM DossierMedical dm JOIN dm.rdvs rdv WHERE rdv.patient.id = :patientId")
+	 List<DossierMedical> findDossierMedicalsByPatientId(@Param("patientId") Long patientId);*/
+	List<DossierMedical> findDossierMedicalsByRdvs_Patient_Id(Long patientId);
 }

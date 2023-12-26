@@ -2,11 +2,10 @@ package com.clinic.entity;
 
 import java.util.Date;
 
+import jakarta.persistence.FetchType;
 import com.clinic.entity.Enum.EtatRDV;
-import com.clinic.entity.Enum.MotifType;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,7 +15,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -52,9 +50,7 @@ public class RendezVous {
     @JsonManagedReference
     private Medecin medecin;
     
-    @ManyToOne
-    @JoinColumn(name = "dossierMedical_id")
-    @JsonManagedReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dossier_id") 
     private DossierMedical dossierMedical;
-
 }
