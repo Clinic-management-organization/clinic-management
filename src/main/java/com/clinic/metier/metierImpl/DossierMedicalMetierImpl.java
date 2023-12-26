@@ -21,7 +21,7 @@ public class DossierMedicalMetierImpl implements DossierMedicalMetier{
 	    }
 	    @Override
 	    public List<DossierMedical> getDossiersMedicauxByPatientId(Long patientId) {
-	        return dossierMedicalDAO.findByPatientId(patientId);
+	        return dossierMedicalDAO.findDossierMedicalsByRdvs_Patient_Id(patientId);
 	    }
 	    @Override
 	    public DossierMedical saveDossierMedical(DossierMedical dossierMedical) {

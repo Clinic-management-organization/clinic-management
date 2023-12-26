@@ -8,5 +8,5 @@ import com.clinic.entity.DossierMedical;
 
 
 public interface DossierMedicalDAO extends JpaRepository<DossierMedical, Long>{
-	List<DossierMedical> findByPatientId(Long id);
+	List<DossierMedical> findDossierMedicalsByRdvs_Patient_Id(Long patientId);
 }
