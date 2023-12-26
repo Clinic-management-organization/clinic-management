@@ -8,10 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import com.clinic.dao.ConsultationDAO;
 import com.clinic.dao.DossierMedicalDAO;
 import com.clinic.dao.MedecinDAO;
 import com.clinic.dao.PatientDAO;
 import com.clinic.dao.RendezVousDAO;
+import com.clinic.entity.Consultation;
 import com.clinic.entity.DossierMedical;
 import com.clinic.entity.Medecin;
 import com.clinic.entity.Patient;
@@ -103,39 +105,42 @@ public class ClinicManagmentApplication {
 		       rdv3.setMedecin(medecin2);
 		       rdv3.setPatient(patient2);
 		       
-		DossierMedical dm1 = new DossierMedical() ;
-		       		dm1.setConsultations(null);
-		       		dm1.setDateCreation(LocalDateTime.now());
-		       		dm1.setDateMiseAJour(LocalDateTime.now());
-		       		dm1.setObservation("ahla dossier");
-		       		List<RendezVous> rdvs = new ArrayList<>();
-		       		rdvs.add(rdv);
-		       		rdvs.add(rdv2);
-		       		dm1.setRdvs(rdvs);
-		DossierMedical dm2 = new DossierMedical() ;
-		       		dm2.setConsultations(null);
-		       		dm2.setDateCreation(LocalDateTime.now());
-		       		dm2.setDateMiseAJour(LocalDateTime.now());
-		       		dm2.setObservation("ahla dossier");
-		       		List<RendezVous> rdvs2 = new ArrayList<>();
-		       		rdvs.add(rdv3);
-		       		rdvs.add(rdv2);
-		       		dm1.setRdvs(rdvs2);		       		
+		       DossierMedical dm1 = new DossierMedical();
+				       dm1.setConsultations(null);
+				       dm1.setDateCreation(LocalDateTime.now());
+				       dm1.setDateMiseAJour(LocalDateTime.now());
+				       dm1.setObservation("ahla dossier");
+				       
+		       DossierMedical dm2 = new DossierMedical();
+				       dm2.setConsultations(null);
+				       dm2.setDateCreation(LocalDateTime.now());
+				       dm2.setDateMiseAJour(LocalDateTime.now());
+				       dm2.setObservation("ahla dossier");
+			  Consultation c1 = new Consultation() ;
+			  			c1.setDossierMedical(dm1);
+			  			c1.setPrix(50);
+			  			c1.setSynthese("mridh fi 7ala");
+			  			
+		       rdv.setDossierMedical(dm2);
+		       rdv2.setDossierMedical(dm1);
+		       rdv3.setDossierMedical(dm1);
+		       
         MedecinDAO medecinDAO=ctx.getBean(MedecinDAO.class);
         PatientDAO patientDAO=ctx.getBean(PatientDAO.class);
         RendezVousDAO rdvDAO=ctx.getBean(RendezVousDAO.class);
         DossierMedicalDAO dmDAO=ctx.getBean(DossierMedicalDAO.class);
+        ConsultationDAO cDAO=ctx.getBean(ConsultationDAO.class);
         
 		medecinDAO.save(medecin1);
         medecinDAO.save(medecin2);
         patientDAO.save(patient1);
         patientDAO.save(patient2);
+        dmDAO.save(dm1) ;
+        dmDAO.save(dm2) ;
         rdvDAO.save(rdv); 
         rdvDAO.save(rdv2); 
         rdvDAO.save(rdv3);
-        dmDAO.save(dm1) ;
-        dmDAO.save(dm2) ;
-        
+        cDAO.save(c1);
 	}	
 	
 }
