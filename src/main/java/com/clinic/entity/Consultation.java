@@ -1,5 +1,12 @@
 package com.clinic.entity;
 
+
+import jakarta.persistence.FetchType;
+
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,8 +22,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Consultation {
 
+public class Consultation implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,8 +35,6 @@ public class Consultation {
 
     @ManyToOne
     @JoinColumn(name = "dossier_id")
+    @JsonBackReference
     private DossierMedical dossierMedical;
-
-
-
 }
