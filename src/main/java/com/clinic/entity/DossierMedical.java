@@ -1,11 +1,16 @@
 package com.clinic.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,9 +31,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DossierMedical {
-
-    @Id
+public class DossierMedical implements Serializable {
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "date_creation", nullable = false)
@@ -38,9 +42,12 @@ public class DossierMedical {
     @Column(name = "observation")
     private String observation;
 
-    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Consultation> consultations = new HashSet<>();
+    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Consultation> consultations = new ArrayList<>();
     
-    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<RendezVous> rdvs = new HashSet<>();;
+    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<RendezVous> rdvs = new ArrayList<>();
+
 }

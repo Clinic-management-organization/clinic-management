@@ -1,5 +1,6 @@
 package com.clinic.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.FetchType;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class RendezVous {
+public class RendezVous implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,10 +48,11 @@ public class RendezVous {
     
     @ManyToOne
     @JoinColumn(name = "medecin_id")
-    @JsonManagedReference
+    @JsonBackReference
     private Medecin medecin;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "dossier_id") 
+    @JsonBackReference
     private DossierMedical dossierMedical;
 }
