@@ -2,6 +2,8 @@ package com.clinic.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,8 +45,8 @@ public class Traitement {
     private LocalDate endDate; 
     
     @ManyToOne
-    @JoinColumn(name = "consultation_id", nullable = false)
+    @JoinColumn(name = "consultation_id")
+    @JsonBackReference
     private Consultation consultation;
-
 
 }
