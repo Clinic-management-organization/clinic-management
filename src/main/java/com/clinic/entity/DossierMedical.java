@@ -1,7 +1,9 @@
 package com.clinic.entity;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,11 +38,9 @@ public class DossierMedical {
     @Column(name = "observation")
     private String observation;
 
-    @OneToMany(mappedBy = "dossierMedical", fetch=FetchType.LAZY)
-    @JsonIgnore
-    private List<Consultation> consultations;
+    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<Consultation> consultations = new HashSet<>();
     
-    @OneToMany(mappedBy = "dossierMedical", fetch=FetchType.LAZY)
-    @JsonIgnore
-    private List<RendezVous> rdvs;
+    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<RendezVous> rdvs = new HashSet<>();;
 }
