@@ -46,4 +46,7 @@ public interface ConsultationMetier {
      * @throws ConsultationNotFoundException Si la consultation n'est pas trouvée.
      */
     void deleteConsultation(Long id) ;
+
+    Consultation addConsultationToDossier(Long dossierId, Consultation consultation);
+
 }

@@ -7,17 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.clinic.dao.ConsultationDAO;
+import com.clinic.dao.DossierMedicalDAO;
 import com.clinic.entity.Consultation;
+import com.clinic.entity.DossierMedical;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.ConsultationMetier;
 
 @Service
 public class ConsultationMetierImpl implements ConsultationMetier {
 	 private final ConsultationDAO consultationDAO;
+	 private final DossierMedicalDAO dossierMedicalDAO;
 
 	    @Autowired
-	    public ConsultationMetierImpl(ConsultationDAO consultationDAO) {
+	    public ConsultationMetierImpl(ConsultationDAO consultationDAO, DossierMedicalDAO dossierMedicalDAO) {
 	        this.consultationDAO = consultationDAO;
+	        this.dossierMedicalDAO = dossierMedicalDAO;
 	    }
 
 	    @Override
@@ -52,5 +56,18 @@ public class ConsultationMetierImpl implements ConsultationMetier {
 	        }
 	        consultationDAO.deleteById(id);
 	    }
+	    @Override
+	    public Consultation addConsultationToDossier(Long dossierId, Consultation consultation) {
+	        Optional<DossierMedical> optionalDossier = dossierMedicalDAO.findById(dossierId);
+	        DossierMedical dossierMedical = optionalDossier.orElseThrow(() -> new NotFoundException("Dossier not found with id: " + dossierId));
+
+	        consultation.setDossierMedical(dossierMedical);
+	        dossierMedical.getConsultations().add(consultation);
+
+	        dossierMedicalDAO.save(dossierMedical);
+
+	        return consultation;
+	    }
+	    
 
 }

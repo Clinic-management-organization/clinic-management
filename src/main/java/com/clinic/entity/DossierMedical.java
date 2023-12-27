@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -38,11 +39,11 @@ public class DossierMedical implements Serializable {
     private String observation;
 
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    
     private List<Consultation> consultations = new ArrayList<>();
     
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    
     private List<RendezVous> rdvs = new ArrayList<>();
 
 }

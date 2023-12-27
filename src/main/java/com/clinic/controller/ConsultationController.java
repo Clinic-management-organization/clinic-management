@@ -14,7 +14,7 @@ import com.clinic.metier.ConsultationMetier;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/consultation")
+@RequestMapping("/api/consultations")
 public class ConsultationController {
 
     private final ConsultationMetier consultationMetier;
@@ -39,6 +39,13 @@ public class ConsultationController {
     @PostMapping
     public ResponseEntity<Consultation> saveConsultation(@RequestBody Consultation consultation) {
         Consultation savedConsultation = consultationMetier.saveConsultation(consultation);
+        return new ResponseEntity<>(savedConsultation, HttpStatus.CREATED);
+    }
+    @PostMapping("/add-to-dossier/{dossierId}")
+    public ResponseEntity<Consultation> addConsultationToDossier(
+            @PathVariable Long dossierId,
+            @RequestBody Consultation consultation) {
+        Consultation savedConsultation = consultationMetier.addConsultationToDossier(dossierId, consultation);
         return new ResponseEntity<>(savedConsultation, HttpStatus.CREATED);
     }
 

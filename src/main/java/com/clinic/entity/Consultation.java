@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -48,6 +49,7 @@ public class Consultation implements Serializable{
 
     @ManyToOne
     @JoinColumn(name = "dossier_id")
+    @JsonIgnore
     @JsonBackReference
     private DossierMedical dossierMedical;
 }
