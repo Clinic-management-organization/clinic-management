@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import com.clinic.DTO.ConsultationDTO;
+import com.clinic.DTO.mapper.ConsultationMapper;
 import com.clinic.entity.Consultation;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.ConsultationMetier;
@@ -36,12 +38,15 @@ public class ConsultationController {
         return new ResponseEntity<>(consultation, HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<Consultation> saveConsultation(@RequestBody Consultation consultation) {
-        Consultation savedConsultation = consultationMetier.saveConsultation(consultation);
-        return new ResponseEntity<>(savedConsultation, HttpStatus.CREATED);
-    }
 
+    @PostMapping
+    public ResponseEntity<ConsultationDTO> createConsultation(@RequestBody ConsultationDTO consultation) {
+        Consultation newconsultation = ConsultationMapper.toEntity(consultation);
+        Consultation createdConsultation = consultationMetier.saveConsultation(newconsultation);
+        ConsultationDTO createdDTO = ConsultationMapper.toDTO(createdConsultation);
+        return new ResponseEntity<>(createdDTO, HttpStatus.CREATED);
+    }
+    
     @PutMapping("/{id}")
     public ResponseEntity<Consultation> updateConsultation(@PathVariable Long id, @RequestBody Consultation consultation) throws NotFoundException {
         consultation.setId(id);

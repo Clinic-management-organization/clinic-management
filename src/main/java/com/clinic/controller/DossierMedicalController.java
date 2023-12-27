@@ -1,5 +1,7 @@
 package com.clinic.controller;
 
+import com.clinic.DTO.DossierMedicalDTO;
+import com.clinic.DTO.mapper.DossierMedicalMapper;
 import com.clinic.entity.DossierMedical;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.DossierMedicalMetier;
@@ -40,11 +42,12 @@ public class DossierMedicalController {
     }
 
     @PostMapping
-    public ResponseEntity<DossierMedical> saveDossierMedical(@RequestBody DossierMedical dossierMedical) {
-        DossierMedical savedDossierMedical = dossierMedicalMetier.saveDossierMedical(dossierMedical);
-        return new ResponseEntity<>(savedDossierMedical, HttpStatus.CREATED);
+    public ResponseEntity<DossierMedicalDTO> createDossierMedical(@RequestBody DossierMedicalDTO dossierMedical) {
+        DossierMedical newdossierMedical = DossierMedicalMapper.toEntity(dossierMedical);
+        DossierMedical createdDossierMedical = dossierMedicalMetier.saveDossierMedical(newdossierMedical);
+        DossierMedicalDTO createdDTO = DossierMedicalMapper.toDTO(createdDossierMedical);
+        return new ResponseEntity<>(createdDTO, HttpStatus.CREATED);
     }
-
     @PutMapping("/update/{id}")
     public ResponseEntity<DossierMedical> updateDossierMedical(@PathVariable Long id, @RequestBody DossierMedical dossierMedical) throws NotFoundException {
         dossierMedical.setId(id);

@@ -3,6 +3,7 @@ package com.clinic.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,18 +32,18 @@ public class DossierMedical implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "date_creation", nullable = false)
-    private LocalDateTime dateCreation;
+    private Date dateCreation;
     @Column(name = "date_mise_a_jour")
-    private LocalDateTime dateMiseAJour;
+    private Date dateMiseAJour;
     @Column(name = "observation")
     private String observation;
 
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<Consultation> consultations = new ArrayList<>();
+    private List<Consultation> consultations ;
     
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
     @JsonManagedReference
-    private List<RendezVous> rdvs = new ArrayList<>();
+    private List<RendezVous> rdvs ;
 
 }

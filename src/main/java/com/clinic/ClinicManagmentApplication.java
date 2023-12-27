@@ -111,14 +111,14 @@ public class ClinicManagmentApplication {
 		       
        DossierMedical dm1 = new DossierMedical();
 		       dm1.setConsultations(null);
-		       dm1.setDateCreation(LocalDateTime.now());
-		       dm1.setDateMiseAJour(LocalDateTime.now());
+		       dm1.setDateCreation(new Date());
+		       dm1.setDateMiseAJour(new Date());
 		       dm1.setObservation("ahla dossier");
 		       
        DossierMedical dm2 = new DossierMedical();
 		       dm2.setConsultations(null);
-		       dm2.setDateCreation(LocalDateTime.now());
-		       dm2.setDateMiseAJour(LocalDateTime.now());
+		       dm2.setDateCreation(new Date());
+		       dm2.setDateMiseAJour(new Date());
 		       dm2.setObservation("ahla dossier");
 	  Consultation c1 = new Consultation() ;
 	  			c1.setDossierMedical(dm1);

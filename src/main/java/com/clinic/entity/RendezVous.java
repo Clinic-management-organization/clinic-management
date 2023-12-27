@@ -49,11 +49,10 @@ public class RendezVous implements Serializable{
     
     @ManyToOne
     @JoinColumn(name = "medecin_id")
-    @JsonBackReference
     private Medecin medecin;
     
     @ManyToOne
-    @JoinColumn(name = "dossier_id") 
     @JsonBackReference
+    @JoinColumn(name = "dossier_id") 
     private DossierMedical dossierMedical;
 }
