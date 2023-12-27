@@ -41,6 +41,7 @@ public class RendezVous implements Serializable{
     @ManyToOne
     @JoinColumn(name = "patient_id") 
     private Patient patient;
+
     @Column(columnDefinition = "TEXT")
     private String remarques;
 

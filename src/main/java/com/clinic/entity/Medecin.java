@@ -39,11 +39,10 @@ public class Medecin extends Utilisateur {
     private SpecialiteType specialite;
 
 
-    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)
     private List<Horaire> horaires; // Liste des horraires disponible pour un medecin
     
     @JsonIgnore
-    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    
+    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)
     private List<RendezVous> RDVs;
 }

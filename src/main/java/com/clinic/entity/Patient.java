@@ -43,7 +43,7 @@ public class Patient extends Utilisateur {
     
     
     @JsonIgnore
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<RendezVous> RDVs;
     
    
