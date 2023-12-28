@@ -40,7 +40,7 @@ public class DossierMedicalController {
         return new ResponseEntity<>(dossierMedical, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<DossierMedical> saveDossierMedical(@RequestBody DossierMedical dossierMedical) {
         DossierMedical savedDossierMedical = dossierMedicalMetier.saveDossierMedical(dossierMedical);
         return new ResponseEntity<>(savedDossierMedical, HttpStatus.CREATED);

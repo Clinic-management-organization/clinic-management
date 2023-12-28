@@ -41,12 +41,12 @@ public class DossierMedical implements Serializable {
 
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
     
-    @JsonManagedReference
+   @JsonIgnore
     private List<Consultation> consultations = new ArrayList<>();
     
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
     
-    @JsonManagedReference
+   @JsonIgnore
     private List<RendezVous> rdvs = new ArrayList<>();
 
 }
