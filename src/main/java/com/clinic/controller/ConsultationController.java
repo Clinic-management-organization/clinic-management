@@ -43,7 +43,7 @@ public class ConsultationController {
     }
     @PostMapping("/add-to-dossier/{dossierId}")
     public ResponseEntity<Consultation> addConsultationToDossier(
-            @PathVariable Long dossierId,
+    		@PathVariable Long dossierId,
             @RequestBody Consultation consultation) {
         Consultation savedConsultation = consultationMetier.addConsultationToDossier(dossierId, consultation);
         return new ResponseEntity<>(savedConsultation, HttpStatus.CREATED);

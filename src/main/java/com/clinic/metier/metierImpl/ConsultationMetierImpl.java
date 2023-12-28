@@ -62,10 +62,10 @@ public class ConsultationMetierImpl implements ConsultationMetier {
 	        DossierMedical dossierMedical = optionalDossier.orElseThrow(() -> new NotFoundException("Dossier not found with id: " + dossierId));
 
 	        consultation.setDossierMedical(dossierMedical);
-	        dossierMedical.getConsultations().add(consultation);
+	        //dossierMedical.getConsultations().add(consultation);
 
-	        dossierMedicalDAO.save(dossierMedical);
-
+	        consultationDAO.save(consultation);
+	        
 	        return consultation;
 	    }
 	    

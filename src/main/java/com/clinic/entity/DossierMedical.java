@@ -40,13 +40,10 @@ public class DossierMedical implements Serializable {
     private String observation;
 
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    
-   @JsonIgnore
     private List<Consultation> consultations = new ArrayList<>();
     
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    
-   @JsonIgnore
+    @JsonIgnore
     private List<RendezVous> rdvs = new ArrayList<>();
 
 }

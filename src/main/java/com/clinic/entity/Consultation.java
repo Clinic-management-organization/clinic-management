@@ -50,6 +50,5 @@ public class Consultation implements Serializable{
     @ManyToOne
     @JoinColumn(name = "dossier_id")
     @JsonIgnore
-    @JsonBackReference
     private DossierMedical dossierMedical;
 }

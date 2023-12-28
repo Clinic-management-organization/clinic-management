@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -28,6 +30,7 @@ import com.clinic.entity.Enum.SpecialiteType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 @SpringBootApplication
 public class ClinicManagmentApplication {	
 	public static void main(String[] args) {
