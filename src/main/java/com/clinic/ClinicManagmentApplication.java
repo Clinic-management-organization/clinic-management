@@ -30,12 +30,11 @@ import com.clinic.entity.Enum.SpecialiteType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
-@SpringBootApplication
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
+//@SpringBootApplication
 public class ClinicManagmentApplication {	
 	public static void main(String[] args) {
 		ApplicationContext ctx=SpringApplication.run(ClinicManagmentApplication.class, args);
-
         // Create and save sample Medecin objects
 		Medecin medecin1 = new Medecin() ;
 				medecin1.setNom("John");
