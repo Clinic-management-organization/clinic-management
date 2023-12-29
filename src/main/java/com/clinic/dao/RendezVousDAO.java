@@ -20,10 +20,10 @@ public interface RendezVousDAO extends JpaRepository<RendezVous, Long>{
 	
 	@Query("SELECT r FROM RendezVous r WHERE " +
 		       "(:etatRendezVous IS NULL OR r.etatRendezVous =:etatRendezVous ) AND " +
-		       "(:dateRendezVous IS NULL OR DATE_FORMAT(r.dateRendezVous, '%Y-%m-%d') = :dateRendezVous)")
+		       "(:dateRendezVous IS NULL OR CAST(r.dateRendezVous AS DATE) = CAST(:dateRendezVous AS DATE))")
 	public List<RendezVous> findByEtatRendezVousAndDateRendezVous(
 	    @Param("etatRendezVous") EtatRDV etatRendezVous,
-	    @Param("dateRendezVous") String dateRendezVous
+	    @Param("dateRendezVous") Date dateRendezVous
 	);
 
 }

@@ -86,7 +86,7 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	    }
 
 		@Override
-		public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, String dateRendezVous) {
+		public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, Date dateRendezVous) {
 		    return rendezVousDAO.findByEtatRendezVousAndDateRendezVous(etatRendezVous, dateRendezVous);
 		}
 
