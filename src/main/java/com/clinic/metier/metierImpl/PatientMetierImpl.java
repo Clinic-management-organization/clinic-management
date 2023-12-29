@@ -2,6 +2,7 @@ package com.clinic.metier.metierImpl;
 
 import com.clinic.dao.PatientDAO;
 import com.clinic.entity.Patient;
+import com.clinic.entity.Enum.GenderType;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.PatientMetier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,8 +56,8 @@ public class PatientMetierImpl implements PatientMetier {
     }
 
 	@Override
-	public List<Patient> searchPatients(String nom, String prenom, String tel, Date dateNaissance) {
-	        List<Patient> patients = patientDAO.findByNomAndPrenomAndTelAndDateNaissance(nom, prenom, tel, dateNaissance);
-	        return patients;
+	public List<Patient> searchPatients(String nom, String prenom, String tel, GenderType sexe) {
+	    return patientDAO.findByNomAndPrenomAndTelAndSexe(nom, prenom, tel, sexe);
 	}
+
 }

@@ -1,5 +1,6 @@
 package com.clinic.metier.metierImpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +11,10 @@ import com.clinic.dao.DossierMedicalDAO;
 import com.clinic.dao.RendezVousDAO;
 import com.clinic.entity.Consultation;
 import com.clinic.entity.DossierMedical;
+import com.clinic.entity.Patient;
 import com.clinic.entity.RendezVous;
+import com.clinic.entity.Enum.EtatRDV;
+import com.clinic.entity.Enum.GenderType;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.RendezVousMetier;
 
@@ -80,5 +84,11 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	        
 	        return rendezVous;
 	    }
+
+		@Override
+		public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, String dateRendezVous) {
+		    return rendezVousDAO.findByEtatRendezVousAndDateRendezVous(etatRendezVous, dateRendezVous);
+		}
+
 
 }

@@ -1,6 +1,5 @@
 package com.clinic.controller;
 
-import com.clinic.entity.Consultation;
 import com.clinic.entity.RendezVous;
 import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.exception.NotFoundException;
@@ -10,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -80,4 +80,17 @@ public class RendezVousController {
         rendezVousMetier.deleteRendezVous(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
+    @GetMapping("/search")
+    public List<RendezVous> searchRendezVous(
+            @RequestParam(required = false) EtatRDV etatRendezVous,
+            @RequestParam(required = false) String dateRendezVous) {
+        // If no parameters are provided, return all patients
+        if (etatRendezVous == null && dateRendezVous == null ) {
+            return rendezVousMetier.getAllRendezVous();
+        }
+        // Call your service method with the search parameters
+        return rendezVousMetier.searchRendezVous(etatRendezVous, dateRendezVous);
+    }
+
 }

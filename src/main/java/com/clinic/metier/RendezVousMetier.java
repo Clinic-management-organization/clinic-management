@@ -1,9 +1,15 @@
 package com.clinic.metier;
 
 import com.clinic.entity.Consultation;
+import com.clinic.entity.Patient;
 import com.clinic.entity.RendezVous;
+import com.clinic.entity.Enum.EtatRDV;
+import com.clinic.entity.Enum.GenderType;
 
+import java.util.Date;
 import java.util.List;
+
+import org.springframework.data.repository.query.Param;
 
 public interface RendezVousMetier {
 
@@ -50,5 +56,19 @@ public interface RendezVousMetier {
      */
     void deleteRendezVous(Long id) ;
     
+    /**
+     * Ajouter un rendez-vous par l'identifiant du dossier medical.
+     *
+     * @param id L'identifiant du dossier Medical.
+     * @throws RendezVousNotFoundException Si le rendez-vous n'est pas trouvé.
+     */
     RendezVous addRendezVousToDossier(Long dossierId, RendezVous rendezVous);
+
+    /**
+     * Rechercher un rendez-vous par son etat ou sa date.
+     *
+     * @param Etat et Date rendez vous .
+     * @throws RendezVousNotFoundException Si le rendez-vous n'est pas trouvé.
+     */
+	public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, String dateRendezVous);
 }

@@ -1,6 +1,7 @@
 package com.clinic.controller;
 
 import com.clinic.entity.Patient;
+import com.clinic.entity.Enum.GenderType;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.PatientMetier;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,4 +65,18 @@ public class PatientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/search")
+    public List<Patient> searchPatients(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) String prenom,
+            @RequestParam(required = false) String tel,
+            @RequestParam(required = false) GenderType sexe) {
+        // If no parameters are provided, return all patients
+        if (nom == null && prenom == null && tel == null && sexe == null) {
+            return patientMetier.getAllPatients();
+        }
+        // Call your service method with the search parameters
+        return patientMetier.searchPatients(nom, prenom, tel, sexe);
+    }
+
 }

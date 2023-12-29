@@ -39,8 +39,7 @@ public class Medecin extends Utilisateur {
     private SpecialiteType specialite;
 
 
-    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)
-    
+    @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)    
     private List<Horaire> horaires; // Liste des horraires disponible pour un medecin
     
     @JsonIgnore

@@ -1,6 +1,7 @@
 package com.clinic.metier;
 
 import com.clinic.entity.Patient;
+import com.clinic.entity.Enum.GenderType;
 
 import java.util.Date;
 import java.util.List;
@@ -17,5 +18,5 @@ public interface PatientMetier {
 
     void deletePatient(Long id);
     
-    public List<Patient> searchPatients(String nom , String prenom, String tel ,Date dateNaissance ) ;
+    public List<Patient> searchPatients(String nom , String prenom, String tel ,GenderType sexe ) ;
 }

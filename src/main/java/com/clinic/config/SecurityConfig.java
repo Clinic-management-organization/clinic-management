@@ -15,7 +15,18 @@ import org.springframework.web.cors.CorsConfiguration;
 @EnableWebSecurity
 public class SecurityConfig {
 
-	private final AuthenticationFilter authenticationFilter = new AuthenticationFilter();
+	 private static final String[] ALLOWED_PATHS = {
+	            "/api/medecins/**",
+	            "/api/diagnostics/**",
+	            "/api/patients/**",
+	            "/api/dossiersMedicaux/**",
+	            "/api/traitements/**",
+	            "/api/consultations/**",
+	            "/api/rendezvous/**",
+	            "/h2-console/**",
+	            "/swagger-ui/**",
+	            "/v3/api-docs/**"
+	    };
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf
@@ -23,7 +34,7 @@ public class SecurityConfig {
         		.disable())
                 //.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 		        .authorizeHttpRequests(authorize -> authorize
-                		.requestMatchers("/api/medecins/**","/api/patients/**", "/api/dossiersMedicaux/**","/api/consultations/**","/api/rendezvous/**", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**")
+                		.requestMatchers(ALLOWED_PATHS)
                 		.permitAll()
                 		.anyRequest()
                 		.authenticated()
