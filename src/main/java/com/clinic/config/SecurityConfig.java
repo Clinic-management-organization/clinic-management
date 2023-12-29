@@ -4,16 +4,11 @@ import java.util.Arrays;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.XXssProtectionHeaderWriter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
@@ -28,7 +23,7 @@ public class SecurityConfig {
         		.disable())
                 //.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 		        .authorizeHttpRequests(authorize -> authorize
-                		.requestMatchers("/api/dossiersMedicaux/**", "/h2-console/**", "/swagger-ui/**",  "/v3/api-docs/**")
+                		.requestMatchers("/api/medecins/**","/api/patients/**", "/api/dossiersMedicaux/**","/api/consultations/**","/api/rendezvous/**", "/h2-console/**", "/swagger-ui/**", "/v3/api-docs/**")
                 		.permitAll()
                 		.anyRequest()
                 		.authenticated()

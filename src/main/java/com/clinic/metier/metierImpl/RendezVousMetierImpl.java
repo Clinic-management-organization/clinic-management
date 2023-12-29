@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.clinic.dao.DossierMedicalDAO;
 import com.clinic.dao.RendezVousDAO;
+import com.clinic.entity.Consultation;
+import com.clinic.entity.DossierMedical;
 import com.clinic.entity.RendezVous;
 import com.clinic.exception.NotFoundException;
 import com.clinic.metier.RendezVousMetier;
@@ -15,10 +18,12 @@ import com.clinic.metier.RendezVousMetier;
 public class RendezVousMetierImpl implements RendezVousMetier {
 	
 	 private final RendezVousDAO rendezVousDAO;
+	 private final DossierMedicalDAO dossierMedicalDAO;
 
 	    @Autowired
-	    public RendezVousMetierImpl(RendezVousDAO rendezVousDAO) {
+	    public RendezVousMetierImpl(RendezVousDAO rendezVousDAO,DossierMedicalDAO dossierMedicalDAO) {
 	        this.rendezVousDAO = rendezVousDAO;
+	        this.dossierMedicalDAO = dossierMedicalDAO;
 	    }
 
 	    @Override
@@ -61,6 +66,19 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	            throw new NotFoundException("RendezVous not found with id: " + id);
 	        }
 	        rendezVousDAO.deleteById(id);
+	    }
+	    
+	    @Override
+	    public RendezVous addRendezVousToDossier(Long dossierId, RendezVous rendezVous) {
+	        Optional<DossierMedical> optionalDossier = dossierMedicalDAO.findById(dossierId);
+	        DossierMedical dossierMedical = optionalDossier.orElseThrow(() -> new NotFoundException("Dossier not found with id: " + dossierId));
+
+	        rendezVous.setDossierMedical(dossierMedical);
+	        //dossierMedical.getConsultations().add(consultation);
+
+	        rendezVousDAO.save(rendezVous);
+	        
+	        return rendezVous;
 	    }
 
 }

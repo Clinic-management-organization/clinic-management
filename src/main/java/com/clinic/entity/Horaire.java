@@ -3,6 +3,8 @@ package com.clinic.entity;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,5 +40,6 @@ public class Horaire {
 
     @ManyToOne
     @JoinColumn(name = "medecin_id")
+    @JsonIgnore
     private Medecin medecin;
 }

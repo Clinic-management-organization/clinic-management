@@ -1,5 +1,6 @@
 package com.clinic.controller;
 
+import com.clinic.entity.Consultation;
 import com.clinic.entity.RendezVous;
 import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.exception.NotFoundException;
@@ -47,6 +48,13 @@ public class RendezVousController {
     public ResponseEntity<RendezVous> saveRendezVous(@RequestBody RendezVous rendezVous) {
         RendezVous savedRendezVous = rendezVousMetier.saveRendezVous(rendezVous);
         return new ResponseEntity<>(savedRendezVous, HttpStatus.CREATED);
+    }
+    @PostMapping("/add-to-dossier/{dossierId}")
+    public ResponseEntity<RendezVous> addRendezVousToDossier(
+    		@PathVariable Long dossierId,
+            @RequestBody RendezVous rendezVous) {
+        RendezVous savedRDV = rendezVousMetier.addRendezVousToDossier(dossierId, rendezVous);
+        return new ResponseEntity<>(savedRDV, HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
