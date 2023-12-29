@@ -7,6 +7,7 @@ import com.clinic.metier.PatientMetier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,4 +53,10 @@ public class PatientMetierImpl implements PatientMetier {
         }
         patientDAO.deleteById(id);
     }
+
+	@Override
+	public List<Patient> searchPatients(String nom, String prenom, String tel, Date dateNaissance) {
+	        List<Patient> patients = patientDAO.findByNomAndPrenomAndTelAndDateNaissance(nom, prenom, tel, dateNaissance);
+	        return patients;
+	}
 }

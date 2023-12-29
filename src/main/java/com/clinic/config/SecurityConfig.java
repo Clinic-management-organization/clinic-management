@@ -28,7 +28,7 @@ public class SecurityConfig {
         		.disable())
                 //.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 		        .authorizeHttpRequests(authorize -> authorize
-                		.requestMatchers("/api/dossiersMedicaux/**", "/h2-console/**", "/swagger-ui/**")
+                		.requestMatchers("/api/dossiersMedicaux/**", "/h2-console/**", "/swagger-ui/**",  "/v3/api-docs/**")
                 		.permitAll()
                 		.anyRequest()
                 		.authenticated()
