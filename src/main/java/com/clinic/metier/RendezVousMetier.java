@@ -6,6 +6,7 @@ import com.clinic.entity.RendezVous;
 import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.entity.Enum.GenderType;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -36,8 +37,8 @@ public interface RendezVousMetier {
      * @return La liste de tous les rendez-vous.
      */
     List<RendezVous> getAllRendezVous();
-    List<RendezVous> getRendezVousByMedecin(Long medecinId);
-    List<RendezVous> getRendezVousByPatient(Long patientId);
+    /*List<RendezVous> getRendezVousByMedecin(Long medecinId);
+    List<RendezVous> getRendezVousByPatient(Long patientId);*/
 
     /**
      * Met à jour les informations d'un rendez-vous.
@@ -70,5 +71,5 @@ public interface RendezVousMetier {
      * @param Etat et Date rendez vous .
      * @throws RendezVousNotFoundException Si le rendez-vous n'est pas trouvé.
      */
-	public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, String dateRendezVous);
+    List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, String dateRendezVous);
 }

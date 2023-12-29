@@ -1,5 +1,6 @@
 package com.clinic.dao;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,16 +15,12 @@ import com.clinic.entity.Enum.GenderType;
 
 
 
-public interface RendezVousDAO extends JpaRepository<RendezVous, Long>{
-	public List<RendezVous> findByMedecinId(Long id);
-	public List<RendezVous> findByPatientId(Long id);
-	
-	@Query("SELECT r FROM RendezVous r WHERE " +
-		       "(:etatRendezVous IS NULL OR r.etatRendezVous =:etatRendezVous ) AND " +
-		       "(:dateRendezVous IS NULL OR DATE_FORMAT(r.dateRendezVous, '%Y-%m-%d') = :dateRendezVous)")
-	public List<RendezVous> findByEtatRendezVousAndDateRendezVous(
-	    @Param("etatRendezVous") EtatRDV etatRendezVous,
-	    @Param("dateRendezVous") String dateRendezVous
-	);
-
+public interface RendezVousDAO extends JpaRepository<RendezVous, Long> {
+    @Query("SELECT r FROM RendezVous r WHERE " +
+           "(:etatRendezVous IS NULL OR r.etatRendezVous = :etatRendezVous) AND " +
+           "(:dateRendezVous IS NULL OR r.dateRendezVous = :dateRendezVous)")
+    List<RendezVous> findByEtatRendezVousAndDateRendezVous(
+        @Param("etatRendezVous") EtatRDV etatRendezVous,
+        @Param("dateRendezVous") String dateRendezVous
+    );
 }

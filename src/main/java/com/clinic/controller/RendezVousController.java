@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class RendezVousController {
         RendezVous rendezVous = rendezVousMetier.getRendezVousById(id);
         return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
-    @GetMapping("/medecin/{medecinId}")
+    /*@GetMapping("/medecin/{medecinId}")
     public List<RendezVous> getRendezVousByMedecin(@PathVariable Long medecinId) {
         return rendezVousMetier.getRendezVousByMedecin(medecinId);
     }
@@ -43,7 +45,7 @@ public class RendezVousController {
     @GetMapping("/patient/{patientId}")
     public List<RendezVous> getRendezVousByPatient(@PathVariable Long patientId) {
         return rendezVousMetier.getRendezVousByPatient(patientId);
-    } 
+    } */
     @PostMapping
     public ResponseEntity<RendezVous> saveRendezVous(@RequestBody RendezVous rendezVous) {
         RendezVous savedRendezVous = rendezVousMetier.saveRendezVous(rendezVous);
@@ -86,11 +88,12 @@ public class RendezVousController {
             @RequestParam(required = false) EtatRDV etatRendezVous,
             @RequestParam(required = false) String dateRendezVous) {
         // If no parameters are provided, return all patients
-        if (etatRendezVous == null && dateRendezVous == null ) {
+        if (etatRendezVous == null && dateRendezVous == null) {
             return rendezVousMetier.getAllRendezVous();
         }
         // Call your service method with the search parameters
         return rendezVousMetier.searchRendezVous(etatRendezVous, dateRendezVous);
     }
+
 
 }

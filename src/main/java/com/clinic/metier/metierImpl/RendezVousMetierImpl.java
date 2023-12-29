@@ -55,7 +55,7 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	        return rendezVousDAO.save(rendezVous);
 	    }
 
-	    @Override
+	   /* @Override
 	    public List<RendezVous> getRendezVousByMedecin(Long medecinId) {
 	        return rendezVousDAO.findByMedecinId(medecinId);
 	    }
@@ -63,7 +63,7 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	    @Override
 	    public List<RendezVous> getRendezVousByPatient(Long patientId) {
 	        return rendezVousDAO.findByPatientId(patientId);
-	    }
+	    }*/
 	    @Override
 	    public void deleteRendezVous(Long id) throws NotFoundException {
 	        if (!rendezVousDAO.existsById(id)) {
