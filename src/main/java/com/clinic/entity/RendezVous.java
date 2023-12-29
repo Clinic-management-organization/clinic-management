@@ -6,6 +6,7 @@ import java.util.Date;
 import jakarta.persistence.FetchType;
 import com.clinic.entity.Enum.EtatRDV;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +38,7 @@ public class RendezVous implements Serializable{
     
     private Date dateRendezVous; // date de la rendez vous par jour et heure
 
-    @JsonBackReference
+    
     @ManyToOne
     @JoinColumn(name = "patient_id") 
     private Patient patient;
@@ -49,11 +50,11 @@ public class RendezVous implements Serializable{
     
     @ManyToOne
     @JoinColumn(name = "medecin_id")
-    @JsonBackReference
+    
     private Medecin medecin;
     
     @ManyToOne
     @JoinColumn(name = "dossier_id") 
-    @JsonBackReference
+    @JsonIgnore
     private DossierMedical dossierMedical;
 }

@@ -1,5 +1,6 @@
 package com.clinic.metier;
 
+import com.clinic.entity.Consultation;
 import com.clinic.entity.RendezVous;
 
 import java.util.List;
@@ -48,4 +49,6 @@ public interface RendezVousMetier {
      * @throws RendezVousNotFoundException Si le rendez-vous n'est pas trouvé.
      */
     void deleteRendezVous(Long id) ;
+    
+    RendezVous addRendezVousToDossier(Long dossierId, RendezVous rendezVous);
 }
