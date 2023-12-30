@@ -71,5 +71,7 @@ public interface RendezVousMetier {
      * @param Etat et Date rendez vous .
      * @throws RendezVousNotFoundException Si le rendez-vous n'est pas trouvé.
      */
-    List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, String dateRendezVous);
+
+	public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, Date dateRendezVous);
+
 }
