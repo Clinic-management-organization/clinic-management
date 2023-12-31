@@ -1,5 +1,6 @@
 package com.clinic.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,22 @@ public class ConsultationController {
     public ResponseEntity<String> deleteConsultation(@PathVariable Long id) throws NotFoundException {
         consultationMetier.deleteConsultation(id);
         return new ResponseEntity<>("Consultation with id " + id + " has been deleted", HttpStatus.OK);
+    }
+    
+    @GetMapping("/income")
+    public ResponseEntity<BigDecimal> getTotalIncome() {
+        BigDecimal totalIncome = consultationMetier.getTotalIncome();
+        return new ResponseEntity<>(totalIncome, HttpStatus.OK);
+    }
+    
+    @GetMapping("/income/{year}/{month}")
+    public ResponseEntity<BigDecimal> getMonthlyIncome(@PathVariable int year, @PathVariable int month) {
+        BigDecimal monthlyIncome = consultationMetier.getMonthlyIncome(year, month);
+        return new ResponseEntity<>(monthlyIncome, HttpStatus.OK);
+    }
+    @GetMapping("/income/year")
+    public ResponseEntity<List<Object[]>> getMonthly() {
+    	List<Object[]> monthlyIncome = consultationMetier.getBymonth();
+        return new ResponseEntity<>(monthlyIncome, HttpStatus.OK);
     }
 }

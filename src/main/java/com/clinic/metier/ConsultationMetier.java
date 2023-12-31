@@ -2,6 +2,7 @@ package com.clinic.metier;
 
 import com.clinic.entity.Consultation;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ConsultationMetier {
@@ -48,5 +49,10 @@ public interface ConsultationMetier {
     void deleteConsultation(Long id) ;
 
     Consultation addConsultationToDossier(Long dossierId, Consultation consultation);
+    BigDecimal getTotalIncome();
+    BigDecimal getMonthlyIncome(int year, int month);
+    List<Object[]> getBymonth();
+
+
 
 }

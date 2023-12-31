@@ -26,6 +26,9 @@ public interface RendezVousDAO extends JpaRepository<RendezVous, Long>{
 	    @Param("etatRendezVous") EtatRDV etatRendezVous,
 	    @Param("dateRendezVous") Date dateRendezVous
 	);
+	@Query(value = "SELECT MONTH(r.date_Rendez_Vous) as `month`, YEAR(r.date_Rendez_Vous) as `year`, COUNT(r.id) as count FROM Rendez_Vous r GROUP BY  `year`, `month`", nativeQuery = true)
+	List<Object[]> countRendezVousByMonth();
+
 
 
 }
