@@ -1,7 +1,6 @@
 package com.clinic.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -50,26 +49,9 @@ public class SecurityConfig {
 	        return new ProviderManager(daoProvider);
 	    }
 	    
-	   
-	
-	 
-
-
-	
-
-
 	public SecurityConfig(RSAKeyProperties keys) {
 			this.keys = keys;
 		}
-
-
-
-
-
-
-
-
-
 	private static final String[] ALLOWED_PATHS = {
 	            "/api/medecins/**",
 	            "/api/diagnostics/**",
@@ -81,7 +63,7 @@ public class SecurityConfig {
 	            "/h2-console/**",
 	            "/swagger-ui/**",
 	            "/v3/api-docs/**",
-	            
+	            "/auth/**",
 	    };
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -90,10 +72,9 @@ public class SecurityConfig {
         		.disable())
                 //.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
 		        .authorizeHttpRequests(authorize ->{
-                		authorize.requestMatchers("/auth/**").permitAll();
+                		authorize.requestMatchers(ALLOWED_PATHS).permitAll();
                 		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                 		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                		authorize.requestMatchers(ALLOWED_PATHS).permitAll();
                 		authorize.anyRequest().authenticated();
 		        })
                 

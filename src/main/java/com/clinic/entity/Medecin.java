@@ -43,7 +43,8 @@ public class Medecin extends Utilisateur {
     @Enumerated(EnumType.STRING)
     private SpecialiteType specialite;
 
-    @OneToOne(mappedBy = "medecin")
+    @JsonIgnore
+     @OneToOne(mappedBy = "medecin")
     private ApplicationUser user;
 
     @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)    
