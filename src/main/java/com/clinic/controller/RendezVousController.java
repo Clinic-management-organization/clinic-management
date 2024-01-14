@@ -96,6 +96,12 @@ public class RendezVousController {
         // Call your service method with the search parameters
         return rendezVousMetier.searchRendezVous(etatRendezVous, dateRendezVous);
     }
+    
+    @GetMapping("/count-by-month")
+    public ResponseEntity<List<Object[]>> countRendezVousByMonth() {
+        List<Object[]> monthlyRendezVousCount = rendezVousMetier.countRendezVousByMonth();
+        return new ResponseEntity<>(monthlyRendezVousCount, HttpStatus.OK);
+    }
 
 
 }
