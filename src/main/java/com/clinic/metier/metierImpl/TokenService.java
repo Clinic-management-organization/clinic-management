@@ -1,5 +1,4 @@
 package com.clinic.metier.metierImpl;
-
 import java.time.Instant;
 import java.util.stream.Collectors;
 
