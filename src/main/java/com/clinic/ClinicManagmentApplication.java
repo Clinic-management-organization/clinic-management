@@ -60,8 +60,6 @@ public class ClinicManagmentApplication {
                 medecin1.setAdresse("123 Main St");
                 medecin1.setTel("123456789");
                 medecin1.setEmail("john.doe@example.com");
-                medecin1.setLogin("john.doe");
-                medecin1.setMotDePasse("password");
                 medecin1.setRole(RoleType.MEDECIN);
                 medecin1.setSpecialite(SpecialiteType.DERMATOLOGIE);
                 medecin1.setHoraires(null);  // Set the list of horaires
@@ -76,8 +74,6 @@ public class ClinicManagmentApplication {
 		        medecin2.setAdresse("123 Main St");
 		        medecin2.setTel("123456789");
 		        medecin2.setEmail("john.doe@example.com");
-		        medecin2.setLogin("john.doe");
-		        medecin2.setMotDePasse("password");
 		        medecin2.setRole(RoleType.MEDECIN);
 		        medecin2.setSpecialite(SpecialiteType.GYNECOLOGIE);
 		        medecin2.setHoraires(null);  // Set the list of horaires
@@ -91,8 +87,6 @@ public class ClinicManagmentApplication {
 				patient1.setAdresse("123oued ellil St");
 				patient1.setTel("123456789");
 				patient1.setEmail("john.doe@example.com");
-				patient1.setLogin("john.doe");
-				patient1.setMotDePasse("password");
 				patient1.setRole(RoleType.PATIENT);
 				patient1.setSituationFamilliale("single");
 				patient1.setRDVs(null);   // Set the list of RDVs
@@ -106,8 +100,6 @@ public class ClinicManagmentApplication {
         		patient2.setAdresse("123 Main St");
         		patient2.setTel("123456789");
         		patient2.setEmail("john.doe@example.com");
-        		patient2.setLogin("john.doe");
-        		patient2.setMotDePasse("password");
         		patient2.setRole(RoleType.MEDECIN);
 				patient2.setSituationFamilliale("married");
         		patient2.setRDVs(null);   // Set the list of RDVs
@@ -185,18 +177,38 @@ public class ClinicManagmentApplication {
 
 	
 	@Bean
-	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO, PasswordEncoder passwordEncode){
+	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO,MedecinDAO medecinDAO, PasswordEncoder passwordEncode){
 		return args ->{
 			if(roleDAO.findByAuthority("ADMIN").isPresent()) return;
+			
 			Role adminRole = roleDAO.save(new Role("ADMIN"));
-			roleDAO.save(new Role("USER"));
-
-			Set<Role> roles = new HashSet<>();
-			roles.add(adminRole);
-
-			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), roles);
-
+			Role userRole = roleDAO.save(new Role("USER"));
+			
+			Set<Role> adminRoles = new HashSet<>();
+			adminRoles.add(adminRole);
+			Set<Role> userRoles = new HashSet<>();
+			userRoles.add(userRole);
+			// Create and save sample Medecin objects
+			Medecin medecin1 = new Medecin() ;
+					medecin1.setNom("John");
+					medecin1.setPrenom("Doe");
+					medecin1.setDateNaissance(new Date());
+	                medecin1.setSexe(GenderType.H);
+	                medecin1.setAdresse("123 Main St");
+	                medecin1.setTel("123456789");
+	                medecin1.setEmail("john.doe@example.com");
+	                medecin1.setRole(RoleType.MEDECIN);
+	                medecin1.setSpecialite(SpecialiteType.DERMATOLOGIE);
+	                medecin1.setHoraires(null);  // Set the list of horaires
+	                medecin1.setRDVs(null);   // Set the list of RDVs
+	        
+			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), adminRoles);
+			ApplicationUser user = new ApplicationUser(1, "user", passwordEncode.encode("password"), userRoles );
+			user.setMedecin(medecin1);
+			medecinDAO.save(medecin1);
 			userDAO.save(admin);
+			userDAO.save(user);
+			
 		};
 	}
 }

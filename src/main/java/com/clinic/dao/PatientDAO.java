@@ -23,6 +23,4 @@ public interface PatientDAO extends JpaRepository<Patient, Long>{
          @Param("tel") String tel,
          @Param("sexe") GenderType sexe
      );
-
-	Optional<Patient> findByLogin(String username);
 }

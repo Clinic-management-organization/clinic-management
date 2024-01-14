@@ -7,6 +7,7 @@ import java.util.Set;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,10 +17,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name="users")
+@AllArgsConstructor
 public class ApplicationUser implements UserDetails{
 
     @Id
@@ -28,7 +36,10 @@ public class ApplicationUser implements UserDetails{
 	@Column(unique=true)
     private String username;
     private String password;
-
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "medecin_id", referencedColumnName = "id")
+    private Medecin medecin; 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name="user_role_junction",

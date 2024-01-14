@@ -44,9 +44,6 @@ public class Utilisateur implements Serializable {
     private String adresse;
     private String tel;
     private String email;
-
-    private String login;
-    private String motDePasse; // Le mot de passe est stocké de manière sécurisée (haché)
     private RoleType role;
 
 }
