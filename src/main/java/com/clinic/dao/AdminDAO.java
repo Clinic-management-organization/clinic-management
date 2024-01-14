@@ -7,4 +7,6 @@ import com.clinic.entity.Admin;
 
 public interface AdminDAO extends JpaRepository<Admin, Long>{
 
+	Admin findByLogin(String username);
+
 }

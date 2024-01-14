@@ -18,6 +18,7 @@ public class AuthenticationService {
             throw new BadCredentialsException("Invalid API Key");
         }
 
-        return new ApiKeyAuthentication(apiKey, AuthorityUtils.NO_AUTHORITIES);
+        //return new ApiKeyAuthentication(apiKey, AuthorityUtils.NO_AUTHORITIES);
+        return new ApiKeyAuthentication(apiKey, AuthorityUtils.createAuthorityList("ROLE_UTILISATEUR"));
     }
 }

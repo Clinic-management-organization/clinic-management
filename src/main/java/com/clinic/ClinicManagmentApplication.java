@@ -2,13 +2,17 @@ package com.clinic;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.clinic.dao.AdminDAO;
 import com.clinic.dao.ConsultationDAO;
 import com.clinic.dao.DiagnosticDAO;
 import com.clinic.dao.DossierMedicalDAO;
@@ -16,6 +20,7 @@ import com.clinic.dao.MedecinDAO;
 import com.clinic.dao.PatientDAO;
 import com.clinic.dao.RendezVousDAO;
 import com.clinic.dao.TraitementDAO;
+import com.clinic.entity.Admin;
 import com.clinic.entity.Consultation;
 import com.clinic.entity.Diagnostic;
 import com.clinic.entity.DossierMedical;
@@ -29,13 +34,23 @@ import com.clinic.entity.Enum.RoleType;
 import com.clinic.entity.Enum.SpecialiteType;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 //@SpringBootApplication
 public class ClinicManagmentApplication {	
+	@Autowired
+    private static PasswordEncoder passwordEncoder; // Autowire the PasswordEncoder bean
+
 	public static void main(String[] args) {
 		ApplicationContext ctx=SpringApplication.run(ClinicManagmentApplication.class, args);
-        // Create and save sample Medecin objects
+		 
+		// Create and save sample Amdin Objects
+		Admin ad = new Admin() ;
+			ad.setLogin("admin");
+			String encodedPassword = passwordEncoder.encode("1234");
+			ad.setMotDePasse("");
+			ad.getNom() ;
+			ad.getPrenom() ;
+		// Create and save sample Medecin objects
 		Medecin medecin1 = new Medecin() ;
 				medecin1.setNom("John");
 				medecin1.setPrenom("Doe");
@@ -123,7 +138,8 @@ public class ClinicManagmentApplication {
 		       dm2.setDateCreation(new Date());
 		       dm2.setDateMiseAJour(new Date());
 		       dm2.setObservation("Test dossier 2");
-	  Consultation c1 = new Consultation() ;
+	  
+       	Consultation c1 = new Consultation() ;
 	  			c1.setDossierMedical(dm1);
 	  			c1.setPrix(50);
 	  			c1.setSynthese("consultation terminé");
@@ -143,6 +159,7 @@ public class ClinicManagmentApplication {
 		       rdv2.setDossierMedical(dm1);
 		       rdv3.setDossierMedical(dm1);
 		       
+        AdminDAO adminDAO=ctx.getBean(AdminDAO.class);
         MedecinDAO medecinDAO=ctx.getBean(MedecinDAO.class);
         PatientDAO patientDAO=ctx.getBean(PatientDAO.class);
         RendezVousDAO rdvDAO=ctx.getBean(RendezVousDAO.class);
@@ -151,6 +168,7 @@ public class ClinicManagmentApplication {
         DossierMedicalDAO dmDAO=ctx.getBean(DossierMedicalDAO.class);
         ConsultationDAO cDAO=ctx.getBean(ConsultationDAO.class);
         
+        adminDAO.save(ad) ;
 		medecinDAO.save(medecin1);
         medecinDAO.save(medecin2);
         patientDAO.save(patient1);

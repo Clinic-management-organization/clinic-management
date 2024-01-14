@@ -1,12 +1,14 @@
 package com.clinic.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.clinic.entity.Patient;
+import com.clinic.entity.Utilisateur;
 import com.clinic.entity.Enum.GenderType;
 
 public interface PatientDAO extends JpaRepository<Patient, Long>{
@@ -21,4 +23,6 @@ public interface PatientDAO extends JpaRepository<Patient, Long>{
          @Param("tel") String tel,
          @Param("sexe") GenderType sexe
      );
+
+	Optional<Patient> findByLogin(String username);
 }
