@@ -1,21 +1,76 @@
 package com.clinic.config;
 
-import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
+
+import com.clinic.utils.RSAKeyProperties;
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+	
+	   private final RSAKeyProperties keys;
+	
+	    @Bean
+	    public BCryptPasswordEncoder passwordEncoder() {
+	        return new BCryptPasswordEncoder();
+	    }
+	    
+	  
 
-	 private static final String[] ALLOWED_PATHS = {
+		@Bean
+	    public AuthenticationManager authManager(UserDetailsService detailsService){
+	        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
+	        daoProvider.setUserDetailsService(detailsService);
+	        daoProvider.setPasswordEncoder(passwordEncoder());
+	        return new ProviderManager(daoProvider);
+	    }
+	    
+	   
+	
+	 
+
+
+	
+
+
+	public SecurityConfig(RSAKeyProperties keys) {
+			this.keys = keys;
+		}
+
+
+
+
+
+
+
+
+
+	private static final String[] ALLOWED_PATHS = {
 	            "/api/medecins/**",
 	            "/api/diagnostics/**",
 	            "/api/patients/**",
@@ -25,7 +80,8 @@ public class SecurityConfig {
 	            "/api/rendezvous/**",
 	            "/h2-console/**",
 	            "/swagger-ui/**",
-	            "/v3/api-docs/**"
+	            "/v3/api-docs/**",
+	            "/auth/**",
 	    };
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,24 +89,45 @@ public class SecurityConfig {
         		.ignoringRequestMatchers("/h2-console/**")
         		.disable())
                 //.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-		        .authorizeHttpRequests(authorize -> authorize
-                		.requestMatchers(ALLOWED_PATHS)
-                		.permitAll()
-                		.anyRequest()
-                		.authenticated()
-                )
+		        .authorizeHttpRequests(authorize ->{
+                		authorize.requestMatchers("/auth/**").permitAll();
+                		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
+                		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                		authorize.requestMatchers(ALLOWED_PATHS).permitAll();
+                		authorize.anyRequest().authenticated();
+		        })
+                
 		        .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) ;
-;
-// To swagger  authorization
-       http.cors(cors -> cors.configurationSource(request -> {
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOrigins(Arrays.asList("*"));
-            configuration.setAllowedMethods(Arrays.asList("*"));
-            configuration.setAllowedHeaders(Arrays.asList("*"));
-            return configuration;
-        }));
+        http.oauth2ResourceServer()
+        .jwt()
+        .jwtAuthenticationConverter(jwtAuthenticationConverter());
+        http.sessionManagement(
+        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        
         return http.build();
     }
+	 @Bean
+	    public JwtDecoder jwtDecoder(){
+	        return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
+	    }
+
+	  @Bean
+	    public JwtEncoder jwtEncoder(){
+	        JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
+	        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+	        return new NimbusJwtEncoder(jwks);
+	    }
+
+	    @Bean
+	    public JwtAuthenticationConverter jwtAuthenticationConverter(){
+	        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+	        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+	        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+	        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+	        jwtConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+	        return jwtConverter;
+	    }
+	    
 }

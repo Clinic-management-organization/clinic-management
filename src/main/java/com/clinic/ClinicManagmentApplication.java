@@ -1,13 +1,21 @@
 package com.clinic;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
 
 import com.clinic.dao.ConsultationDAO;
 import com.clinic.dao.DiagnosticDAO;
@@ -15,13 +23,18 @@ import com.clinic.dao.DossierMedicalDAO;
 import com.clinic.dao.MedecinDAO;
 import com.clinic.dao.PatientDAO;
 import com.clinic.dao.RendezVousDAO;
+import com.clinic.dao.RoleDAO;
 import com.clinic.dao.TraitementDAO;
+import com.clinic.dao.UserDAO;
+
+import com.clinic.entity.ApplicationUser;
 import com.clinic.entity.Consultation;
 import com.clinic.entity.Diagnostic;
 import com.clinic.entity.DossierMedical;
 import com.clinic.entity.Medecin;
 import com.clinic.entity.Patient;
 import com.clinic.entity.RendezVous;
+import com.clinic.entity.Role;
 import com.clinic.entity.Traitement;
 import com.clinic.entity.Enum.EtatRDV;
 import com.clinic.entity.Enum.GenderType;
@@ -29,13 +42,16 @@ import com.clinic.entity.Enum.RoleType;
 import com.clinic.entity.Enum.SpecialiteType;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 //@SpringBootApplication
 public class ClinicManagmentApplication {	
+	@Autowired
+    private static PasswordEncoder passwordEncoder; // Autowire the PasswordEncoder bean
+
 	public static void main(String[] args) {
 		ApplicationContext ctx=SpringApplication.run(ClinicManagmentApplication.class, args);
-        // Create and save sample Medecin objects
+		
+		// Create and save sample Medecin objects
 		Medecin medecin1 = new Medecin() ;
 				medecin1.setNom("John");
 				medecin1.setPrenom("Doe");
@@ -123,8 +139,7 @@ public class ClinicManagmentApplication {
 		       dm2.setDateCreation(new Date());
 		       dm2.setDateMiseAJour(new Date());
 		       dm2.setObservation("Test dossier 2");
-		       
-	  Consultation c1 = new Consultation() ;
+       	Consultation c1 = new Consultation() ;
 	  			c1.setDossierMedical(dm1);
 	  			c1.setPrix(50);
 	  			c1.setDateCreation(new Date());
@@ -145,6 +160,7 @@ public class ClinicManagmentApplication {
 		       rdv2.setDossierMedical(dm1);
 		       rdv3.setDossierMedical(dm1);
 		       
+      
         MedecinDAO medecinDAO=ctx.getBean(MedecinDAO.class);
         PatientDAO patientDAO=ctx.getBean(PatientDAO.class);
         RendezVousDAO rdvDAO=ctx.getBean(RendezVousDAO.class);
@@ -152,7 +168,7 @@ public class ClinicManagmentApplication {
         DiagnosticDAO dDAO=ctx.getBean(DiagnosticDAO.class);
         DossierMedicalDAO dmDAO=ctx.getBean(DossierMedicalDAO.class);
         ConsultationDAO cDAO=ctx.getBean(ConsultationDAO.class);
-        
+      
 		medecinDAO.save(medecin1);
         medecinDAO.save(medecin2);
         patientDAO.save(patient1);
@@ -166,5 +182,21 @@ public class ClinicManagmentApplication {
         tDAO.save(t1);
         dDAO.save(d1);
 	}	
+
 	
+	@Bean
+	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO, PasswordEncoder passwordEncode){
+		return args ->{
+			if(roleDAO.findByAuthority("ADMIN").isPresent()) return;
+			Role adminRole = roleDAO.save(new Role("ADMIN"));
+			roleDAO.save(new Role("USER"));
+
+			Set<Role> roles = new HashSet<>();
+			roles.add(adminRole);
+
+			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), roles);
+
+			userDAO.save(admin);
+		};
+	}
 }
