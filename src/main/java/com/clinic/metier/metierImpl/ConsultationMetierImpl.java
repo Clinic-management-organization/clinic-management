@@ -1,5 +1,6 @@
 package com.clinic.metier.metierImpl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,5 +70,17 @@ public class ConsultationMetierImpl implements ConsultationMetier {
 	        return consultation;
 	    }
 	    
-
+	    @Override
+	    public BigDecimal getTotalIncome() {
+	        return consultationDAO.calculateTotalIncome();
+	    }
+	    
+	    @Override
+	    public BigDecimal getMonthlyIncome(int year, int month) {
+	        return consultationDAO.calculateMonthlyIncome(year, month);
+	    }
+	    @Override
+	    public List<Object[]> getBymonth (){
+	        return consultationDAO.calculateMonthlyIncome();
+	    }
 }

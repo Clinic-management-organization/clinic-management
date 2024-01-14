@@ -90,5 +90,9 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 		    return rendezVousDAO.findByEtatRendezVousAndDateRendezVous(etatRendezVous, dateRendezVous);
 		}
 
+		@Override
+	    public List<Object[]> countRendezVousByMonth() {
+	        return rendezVousDAO.countRendezVousByMonth();
+	    }
 
 }

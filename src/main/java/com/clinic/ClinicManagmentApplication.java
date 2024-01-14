@@ -139,10 +139,10 @@ public class ClinicManagmentApplication {
 		       dm2.setDateCreation(new Date());
 		       dm2.setDateMiseAJour(new Date());
 		       dm2.setObservation("Test dossier 2");
-	  
        	Consultation c1 = new Consultation() ;
 	  			c1.setDossierMedical(dm1);
 	  			c1.setPrix(50);
+	  			c1.setDateCreation(new Date());
 	  			c1.setSynthese("consultation terminé");
 	  Traitement t1 =  new Traitement() ;
 				t1.setConsultation(c1);
