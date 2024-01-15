@@ -65,7 +65,7 @@ public class SecurityConfig{
 	            "/h2-console/**",
 	            "/swagger-ui/**",
 	            "/v3/api-docs/**",
-	            "/auth/**",
+	            
 	    };
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -76,6 +76,7 @@ public class SecurityConfig{
                 		authorize.requestMatchers(ALLOWED_PATHS)
 //                		.permitAll();
                 		.hasRole("USER");
+                		authorize.requestMatchers("/auth/**").permitAll();
                 		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                 		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 		authorize.anyRequest().authenticated();
