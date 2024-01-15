@@ -197,7 +197,7 @@ public class ClinicManagmentApplication {
 	                medecin1.setRDVs(null);   // Set the list of RDVs
 	        
 			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), adminRoles);
-			ApplicationUser user = new ApplicationUser(1, "user", passwordEncode.encode("password"), userRoles );
+			ApplicationUser user = new ApplicationUser(2, "user", passwordEncode.encode("password"), userRoles );
 			user.setMedecin(medecin1);
 			medecinDAO.save(medecin1);
 			userDAO.save(admin);

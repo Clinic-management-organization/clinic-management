@@ -4,6 +4,7 @@ package com.clinic.entity;
 import java.util.List;
 
 import com.clinic.entity.Enum.SpecialiteType;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -35,9 +36,8 @@ public class Medecin extends Utilisateur {
    
     @Enumerated(EnumType.STRING)
     private SpecialiteType specialite;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "userId")
+    @JsonBackReference
+    @OneToOne(mappedBy = "medecin", cascade = CascadeType.ALL)
     private ApplicationUser user;
 
     @OneToMany(mappedBy = "medecin", cascade = CascadeType.ALL)    

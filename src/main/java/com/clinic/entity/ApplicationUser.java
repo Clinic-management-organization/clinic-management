@@ -35,7 +35,8 @@ public class ApplicationUser implements UserDetails{
     private String username;
     private String password;
     
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "medecin_id")
     private Medecin medecin; 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
