@@ -8,7 +8,6 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,9 +19,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.clinic.utils.RSAKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
@@ -52,6 +48,7 @@ public class SecurityConfig{
 	    }
 	    
 	public SecurityConfig(RSAKeyProperties keys) {
+		System.out.println("keys"+keys);
 			this.keys = keys;
 		}
 	private static final String[] ALLOWED_PATHS = {
@@ -75,7 +72,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests(authorize ->{
                 		authorize.requestMatchers(ALLOWED_PATHS)
 //                		.permitAll();
-                		.hasRole("USER");
+                		.hasAnyRole("ADMIN", "USER");
                 		authorize.requestMatchers("/auth/**").permitAll();
                 		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                 		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
@@ -86,13 +83,9 @@ public class SecurityConfig{
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) ;
         
-//        http
-//        .oauth2ResourceServer()
-//        .jwt()
-//        .jwtAuthenticationConverter(jwtAuthenticationConverter());
-        http.oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-        );
+		        http.oauth2ResourceServer(oauth2 -> oauth2
+		                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+		        	);
         
         return http.build();
     }
