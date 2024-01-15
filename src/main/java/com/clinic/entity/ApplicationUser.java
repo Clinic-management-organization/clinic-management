@@ -36,8 +36,9 @@ public class ApplicationUser implements UserDetails{
     private String password;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "medecin_id")
-    private Medecin medecin; 
+    @JoinColumn(name = "patient_id")
+    private Patient patient; 
+    
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(
         name="user_role_junction",

@@ -51,28 +51,35 @@ public class SecurityConfig{
 		System.out.println("keys"+keys);
 			this.keys = keys;
 		}
-	private static final String[] ALLOWED_PATHS = {
-	            "/api/medecins/**",
-	            "/api/diagnostics/**",
-	            "/api/patients/**",
-	            "/api/dossiersMedicaux/**",
-	            "/api/traitements/**",
-	            "/api/consultations/**",
+	private static final String[] ALLOWED_PATHS_USER = {
 	            "/api/rendezvous/**",
 	            "/h2-console/**",
 	            "/swagger-ui/**",
-	            "/v3/api-docs/**",
-	            
+	            "/v3/api-docs/**",	            
 	    };
+	private static final String[] ALLOWED_PATHS_ADMIN = {
+            "/api/medecins/**",
+            "/api/diagnostics/**",
+            "/api/patients/**",
+            "/api/dossiersMedicaux/**",
+            "/api/traitements/**",
+            "/api/consultations/**",
+            "/api/rendezvous/**",
+            "/h2-console/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            
+    };
+
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf
         		.ignoringRequestMatchers("/h2-console/**")
         		.disable())
                 .authorizeHttpRequests(authorize ->{
-                		authorize.requestMatchers(ALLOWED_PATHS)
+	            		authorize.requestMatchers(ALLOWED_PATHS_USER).hasRole("USER");
+	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN).hasRole("ADMIN");
 //                		.permitAll();
-                		.hasAnyRole("ADMIN", "USER");
                 		authorize.requestMatchers("/auth/**").permitAll();
                 		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                 		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");

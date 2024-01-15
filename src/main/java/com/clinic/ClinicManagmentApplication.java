@@ -168,10 +168,8 @@ public class ClinicManagmentApplication {
         tDAO.save(t1);
         dDAO.save(d1);
 	}	
-
-	
 	@Bean
-	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO,MedecinDAO medecinDAO, PasswordEncoder passwordEncode){
+	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO,PatientDAO patientDAO, PasswordEncoder passwordEncode){
 		return args ->{
 			if(roleDAO.findByAuthority("ADMIN").isPresent()) return;
 			
@@ -182,27 +180,27 @@ public class ClinicManagmentApplication {
 			adminRoles.add(adminRole);
 			Set<Role> userRoles = new HashSet<>();
 			userRoles.add(userRole);
-			// Create and save sample Medecin objects
-			Medecin medecin1 = new Medecin() ;
-					medecin1.setNom("John");
-					medecin1.setPrenom("Doe");
-					medecin1.setDateNaissance(new Date());
-	                medecin1.setSexe(GenderType.H);
-	                medecin1.setAdresse("123 Main St");
-	                medecin1.setTel("123456789");
-	                medecin1.setEmail("john.doe@example.com");
-	                medecin1.setRole(RoleType.MEDECIN);
-	                medecin1.setSpecialite(SpecialiteType.DERMATOLOGIE);
-	                medecin1.setHoraires(null);  // Set the list of horaires
-	                medecin1.setRDVs(null);   // Set the list of RDVs
+			
+			Patient patient1 = new Patient() ;
+				patient1.setNom("Ameni");
+				patient1.setPrenom("Selmi");
+				patient1.setDateNaissance(new Date());
+				patient1.setSexe(GenderType.F);
+				patient1.setAdresse("123oued ellil St");
+				patient1.setTel("123456789");
+				patient1.setEmail("john.doe@example.com");
+				patient1.setRole(RoleType.PATIENT);
+				patient1.setSituationFamilliale("single");
+				patient1.setRDVs(null);   // Set the list of RDVs
 	        
 			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), adminRoles);
 			ApplicationUser user = new ApplicationUser(2, "user", passwordEncode.encode("password"), userRoles );
-			user.setMedecin(medecin1);
-			medecinDAO.save(medecin1);
+			user.setPatient(patient1);
+			patientDAO.save(patient1);
 			userDAO.save(admin);
 			userDAO.save(user);
-			
 		};
 	}
+
+	
 }
