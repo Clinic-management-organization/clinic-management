@@ -42,11 +42,11 @@ public class RendezVousController {
     public List<RendezVous> getRendezVousByMedecin(@PathVariable Long medecinId) {
         return rendezVousMetier.getRendezVousByMedecin(medecinId);
     }
-    
+    */
     @GetMapping("/patient/{patientId}")
     public List<RendezVous> getRendezVousByPatient(@PathVariable Long patientId) {
         return rendezVousMetier.getRendezVousByPatient(patientId);
-    } */
+    } 
     @PostMapping
     public ResponseEntity<RendezVous> saveRendezVous(@RequestBody RendezVous rendezVous) {
         RendezVous savedRendezVous = rendezVousMetier.saveRendezVous(rendezVous);

@@ -74,6 +74,9 @@ public interface RendezVousMetier {
 
 	public List<RendezVous> searchRendezVous(EtatRDV etatRendezVous, Date dateRendezVous);
     List<Object[]> countRendezVousByMonth();
+    
+    List<RendezVous> getRendezVousByPatient(Long patientID);
+
 
 
 }

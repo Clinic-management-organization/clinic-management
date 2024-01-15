@@ -46,6 +46,14 @@ public class RendezVousMetierImpl implements RendezVousMetier {
 	        return rendezVousDAO.findAll();
 	    }
 
+	    
+	    @Override
+	    public List<RendezVous>  getRendezVousByPatient(Long patientId)  {
+	    	List<RendezVous>  optionalRendezVous = rendezVousDAO.findByPatientId(patientId);
+	        return optionalRendezVous;
+	    }
+	    
+	  
 	    @Override
 	    public RendezVous updateRendezVous(RendezVous rendezVous) throws NotFoundException {
 	        Long rendezVousId = rendezVous.getId();

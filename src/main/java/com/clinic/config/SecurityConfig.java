@@ -77,7 +77,7 @@ public class SecurityConfig{
         		.ignoringRequestMatchers("/h2-console/**")
         		.disable())
                 .authorizeHttpRequests(authorize ->{
-	            		authorize.requestMatchers(ALLOWED_PATHS_USER).hasRole("USER");
+	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN).hasRole("USER");
 	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN).hasRole("ADMIN");
 //                		.permitAll();
                 		authorize.requestMatchers("/auth/**").permitAll();
