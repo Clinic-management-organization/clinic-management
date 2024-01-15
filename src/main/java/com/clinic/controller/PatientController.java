@@ -41,7 +41,6 @@ public class PatientController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Patient>> getAllPatients() {
         List<Patient> patients = patientMetier.getAllPatients();
         return new ResponseEntity<>(patients, HttpStatus.OK);

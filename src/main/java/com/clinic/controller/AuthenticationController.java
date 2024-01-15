@@ -16,7 +16,7 @@ import com.clinic.metier.metierImpl.AuthenticationService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:3000")
 public class AuthenticationController {
 
     @Autowired
