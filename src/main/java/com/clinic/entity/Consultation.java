@@ -1,7 +1,6 @@
 package com.clinic.entity;
 
 
-import jakarta.persistence.FetchType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

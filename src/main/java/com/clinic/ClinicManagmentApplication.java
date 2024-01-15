@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,10 +11,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
 
 import com.clinic.dao.ConsultationDAO;
 import com.clinic.dao.DiagnosticDAO;
@@ -45,8 +41,6 @@ import java.time.LocalDate;
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, UserDetailsServiceAutoConfiguration.class})
 //@SpringBootApplication
 public class ClinicManagmentApplication {	
-	@Autowired
-    private static PasswordEncoder passwordEncoder; // Autowire the PasswordEncoder bean
 
 	public static void main(String[] args) {
 		ApplicationContext ctx=SpringApplication.run(ClinicManagmentApplication.class, args);
