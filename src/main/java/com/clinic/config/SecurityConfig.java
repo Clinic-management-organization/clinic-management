@@ -68,8 +68,7 @@ public class SecurityConfig{
         http.csrf(csrf -> csrf
         		.ignoringRequestMatchers("/h2-console/**")
         		.disable())
-                //.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-		        .authorizeHttpRequests(authorize ->{
+                .authorizeHttpRequests(authorize ->{
                 		authorize.requestMatchers(ALLOWED_PATHS).permitAll();
                 		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
                 		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
@@ -79,34 +78,37 @@ public class SecurityConfig{
 		        .headers(headers -> headers.frameOptions(FrameOptionsConfig::disable))
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) ;
-        http.oauth2ResourceServer()
-        .jwt()
-        .jwtAuthenticationConverter(jwtAuthenticationConverter());
-        http.sessionManagement(
-        session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        
+//        http
+//        .oauth2ResourceServer()
+//        .jwt()
+//        .jwtAuthenticationConverter(jwtAuthenticationConverter());
+        http.oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+        );
         
         return http.build();
     }
 	 @Bean
-	    public JwtDecoder jwtDecoder(){
-	        return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
-	    }
+    public JwtDecoder jwtDecoder(){
+        return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
+    }
 
-	  @Bean
-	    public JwtEncoder jwtEncoder(){
-	        JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
-	        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-	        return new NimbusJwtEncoder(jwks);
-	    }
+  @Bean
+    public JwtEncoder jwtEncoder(){
+        JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
+        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwks);
+    }
 
-	    @Bean
-	    public JwtAuthenticationConverter jwtAuthenticationConverter(){
-	        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-	        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
-	        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
-	        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
-	        jwtConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
-	        return jwtConverter;
-	    }
-	    
+    @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter(){
+        JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+        jwtGrantedAuthoritiesConverter.setAuthoritiesClaimName("roles");
+        jwtGrantedAuthoritiesConverter.setAuthorityPrefix("ROLE_");
+        JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
+        jwtConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
+        return jwtConverter;
+    }
+    
 }

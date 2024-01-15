@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
+
 	 @Override
 	    public void addCorsMappings(CorsRegistry registry) {
 	        registry.addMapping("/**")
@@ -15,11 +16,13 @@ public class CorsConfig implements WebMvcConfigurer {
 	                .allowedHeaders("Content-Type", "allowedroles")
 	                .maxAge(3600);
     
+
+   
 	    registry.addMapping("/auth/**")
-	    .allowedOrigins("http://localhost:3000")
-	    .allowedMethods("GET", "POST", "PUT", "DELETE")
-	    .allowedHeaders("Content-Type")
-	    .maxAge(3600);
+			    .allowedOrigins("http://localhost:3000")
+			    .allowedMethods("GET", "POST", "PUT", "DELETE")
+			    .allowedHeaders("Content-Type")
+			    .maxAge(3600);
 	}
 }
 
