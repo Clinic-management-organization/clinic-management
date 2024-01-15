@@ -30,7 +30,7 @@ import com.nimbusds.jose.proc.SecurityContext;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 	
 	   private final RSAKeyProperties keys;
 	
@@ -38,9 +38,7 @@ public class SecurityConfig {
 	    public BCryptPasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
 	    }
-	    
-	  
-
+	      
 		@Bean
 	    public AuthenticationManager authManager(UserDetailsService detailsService){
 	        DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
