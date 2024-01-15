@@ -23,10 +23,10 @@ import com.clinic.entity.Role;
 public class AuthenticationService {
 
     @Autowired
-    private UserDAO userRepository;
+    private UserDAO userDAO;
 
     @Autowired
-    private RoleDAO roleRepository;
+    private RoleDAO roleDAO;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -40,13 +40,13 @@ public class AuthenticationService {
     public ApplicationUser registerUser(String username, String password){
 
         String encodedPassword = passwordEncoder.encode(password);
-        Role userRole = roleRepository.findByAuthority("USER").get();
+        Role userRole = roleDAO.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
 
-        return userRepository.save(new ApplicationUser(0, username, encodedPassword, authorities));
+        return userDAO.save(new ApplicationUser(0, username, encodedPassword, authorities));
     }
 
     public LoginResponseDTO loginUser(String username, String password){
@@ -58,7 +58,7 @@ public class AuthenticationService {
 
             String token = tokenService.generateJwt(auth);
 
-            return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
+            return new LoginResponseDTO(userDAO.findByUsername(username).get(), token);
 
         } catch(AuthenticationException e){
             return new LoginResponseDTO(null, "");
