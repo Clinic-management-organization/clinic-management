@@ -1,5 +1,7 @@
 package com.clinic;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -150,23 +152,26 @@ public class ClinicManagmentApplication {
 		       dossierMedical3.setObservation("Test dossier 3");
 
 
-       	Consultation c1 = new Consultation() ;
-	  			c1.setDossierMedical(dm1);
-	  			c1.setPrix(50);
-	  			c1.setDateCreation(new Date());
-	  			c1.setSynthese("consultation terminé");
-	  			
-	  			Consultation consultation2 = new Consultation();
-	  			consultation2.setDossierMedical(dm1);
-	  			consultation2.setPrix(60);
-	  			consultation2.setDateCreation(new Date());
-	  			consultation2.setSynthese("Consultation en cours");
+		       Consultation c1 = new Consultation();
+		        c1.setDossierMedical(dm1);
+		        c1.setPrix(50);
+		        c1.setDateCreation(parseDate("2023-06-15"));
+		        c1.setSynthese("consultation terminée");
 
-	  			Consultation consultation3 = new Consultation();
-	  			consultation3.setDossierMedical(dm2);
-	  			consultation3.setPrix(70);
-	  			consultation3.setDateCreation(new Date());
-	  			consultation3.setSynthese("Consultation prévue");
+		        Consultation consultation2 = new Consultation();
+		        consultation2.setDossierMedical(dm1);
+		        consultation2.setPrix(60);
+		        consultation2.setDateCreation(parseDate("2023-03-16")); 
+		        consultation2.setSynthese("Consultation en cours");
+
+		        Consultation consultation3 = new Consultation();
+		        consultation3.setDossierMedical(dm2);
+		        consultation3.setPrix(70);
+		        consultation3.setDateCreation(parseDate("2023-12-17")); 
+		        consultation3.setSynthese("Consultation prévue");
+
+
+		       
 
 	  Traitement t1 =  new Traitement() ;
 				t1.setConsultation(c1);
@@ -190,7 +195,7 @@ public class ClinicManagmentApplication {
 				traitement3.setEndDate(LocalDate.now().plusDays(5));
 
 	  			
-	  Diagnostic d1 =  new Diagnostic() ;
+	            Diagnostic d1 =  new Diagnostic() ;
 				d1.setConsultation(c1);
 				d1.setDescription("Radiologie");
 				
@@ -314,11 +319,21 @@ public class ClinicManagmentApplication {
         tDAO.save(traitement2);
         tDAO.save(traitement3);
         dDAO.save(diagnostic2);
-        dDAO.save(diagnostic3);
+        dDAO.save(diagnostic3);}
         
- 
+        private static Date parseDate(String dateString) {
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                return sdf.parse(dateString);
+            } catch (ParseException e) {
+                e.printStackTrace(); 
+                return null;
+            }
+        
+        
+	}
        
-	}	
+	
 	@Bean
 	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO,PatientDAO patientDAO, PasswordEncoder passwordEncode){
 		return args ->{
@@ -344,8 +359,8 @@ public class ClinicManagmentApplication {
 				patient1.setSituationFamilliale("single");
 				patient1.setRDVs(null);   // Set the list of RDVs
 	        
-			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), adminRoles);
-			ApplicationUser user = new ApplicationUser(2, "user", passwordEncode.encode("password"), userRoles );
+			ApplicationUser admin = new ApplicationUser(1, "admin@gmail.com", passwordEncode.encode("password"), adminRoles);
+			ApplicationUser user = new ApplicationUser(2, "user@gmail.com", passwordEncode.encode("password"), userRoles );
 			user.setPatient(patient1);
 			patientDAO.save(patient1);
 			userDAO.save(admin);
