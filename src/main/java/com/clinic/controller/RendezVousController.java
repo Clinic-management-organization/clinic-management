@@ -38,11 +38,12 @@ public class RendezVousController {
         RendezVous rendezVous = rendezVousMetier.getRendezVousById(id); 
         return new ResponseEntity<>(rendezVous, HttpStatus.OK);
     }
-    /*@GetMapping("/medecin/{medecinId}")
+    
+    @GetMapping("/medecin/{medecinId}")
     public List<RendezVous> getRendezVousByMedecin(@PathVariable Long medecinId) {
         return rendezVousMetier.getRendezVousByMedecin(medecinId);
     }
-    */
+    
     @GetMapping("/patient/{patientId}")
     public List<RendezVous> getRendezVousByPatient(@PathVariable Long patientId) {
         return rendezVousMetier.getRendezVousByPatient(patientId);
