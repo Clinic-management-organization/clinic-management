@@ -46,7 +46,6 @@ public class ApplicationUser implements UserDetails{
         inverseJoinColumns = {@JoinColumn(name="role_id")}
     )
     private Set<Role> authorities;
-
     public ApplicationUser() {
 		super();
 		authorities = new HashSet<>();

@@ -53,6 +53,7 @@ public class SecurityConfig{
 		}
 	private static final String[] ALLOWED_PATHS_USER = {
 	            "/api/rendezvous/**",
+	            "/api/dossiersMedicaux/**",
 	            "/h2-console/**",
 	            "/swagger-ui/**",
 	            "/v3/api-docs/**",	            
@@ -67,8 +68,7 @@ public class SecurityConfig{
             "/api/rendezvous/**",
             "/h2-console/**",
             "/swagger-ui/**",
-            "/v3/api-docs/**",
-            
+            "/v3/api-docs/**",   
     };
 
 	@Bean
@@ -77,12 +77,12 @@ public class SecurityConfig{
         		.ignoringRequestMatchers("/h2-console/**")
         		.disable())
                 .authorizeHttpRequests(authorize ->{
-	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN).hasRole("USER");
-	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN).hasRole("ADMIN");
+	            		authorize.requestMatchers(ALLOWED_PATHS_USER)
+	            		.hasAnyRole("USER", "ADMIN");
+	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN)
+	            		.hasRole("ADMIN");
 //                		.permitAll();
                 		authorize.requestMatchers("/auth/**").permitAll();
-                		authorize.requestMatchers("/admin/**").hasRole("ADMIN");
-                		authorize.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 		authorize.anyRequest().authenticated();
 		        })
                 

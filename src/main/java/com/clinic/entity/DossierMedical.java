@@ -51,8 +51,7 @@ public class DossierMedical implements Serializable {
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
     private List<Consultation> consultations = new ArrayList<>();
     
-    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    
+    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)    
     private List<RendezVous> rdvs = new ArrayList<>();
 
 }

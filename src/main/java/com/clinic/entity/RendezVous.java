@@ -50,7 +50,6 @@ public class RendezVous implements Serializable{
     
     @ManyToOne
     @JoinColumn(name = "medecin_id")
-    
     private Medecin medecin;
     
     @ManyToOne
