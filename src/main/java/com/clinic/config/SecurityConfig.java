@@ -51,12 +51,16 @@ public class SecurityConfig{
 		System.out.println("keys"+keys);
 			this.keys = keys;
 		}
+	private static final String[] ALLOWED_PATHS_ANY = {
+            "/h2-console/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",	   
+            "/auth/**",
+    };
+
 	private static final String[] ALLOWED_PATHS_USER = {
 	            "/api/rendezvous/**",
 	            "/api/dossiersMedicaux/**",
-	            "/h2-console/**",
-	            "/swagger-ui/**",
-	            "/v3/api-docs/**",	            
 	    };
 	private static final String[] ALLOWED_PATHS_ADMIN = {
             "/api/medecins/**",
@@ -66,9 +70,6 @@ public class SecurityConfig{
             "/api/traitements/**",
             "/api/consultations/**",
             "/api/rendezvous/**",
-            "/h2-console/**",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",   
     };
 
 	@Bean
@@ -82,7 +83,8 @@ public class SecurityConfig{
 	            		authorize.requestMatchers(ALLOWED_PATHS_ADMIN)
 	            		.hasRole("ADMIN");
 //                		.permitAll();
-                		authorize.requestMatchers("/auth/**").permitAll();
+                		authorize.requestMatchers(ALLOWED_PATHS_ANY)
+                		.permitAll();
                 		authorize.anyRequest().authenticated();
 		        })
                 
