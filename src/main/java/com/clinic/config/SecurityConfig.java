@@ -47,30 +47,29 @@ public class SecurityConfig{
 	        return new ProviderManager(daoProvider);
 	    }
 	    
-	public SecurityConfig(RSAKeyProperties keys) {
+		public SecurityConfig(RSAKeyProperties keys) {
 		System.out.println("keys"+keys);
 			this.keys = keys;
 		}
-	private static final String[] ALLOWED_PATHS_ANY = {
-            "/h2-console/**",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",	   
-            "/auth/**",
-    };
-
-	private static final String[] ALLOWED_PATHS_USER = {
-	            "/api/rendezvous/**",
-	            "/api/dossiersMedicaux/**",
+		private static final String[] ALLOWED_PATHS_ANY = {
+	            "/h2-console/**",
+	            "/swagger-ui/**",
+	            "/v3/api-docs/**",	   
+	            "/auth/**",
 	    };
-	private static final String[] ALLOWED_PATHS_ADMIN = {
-            "/api/medecins/**",
-            "/api/diagnostics/**",
-            "/api/patients/**",
-            "/api/dossiersMedicaux/**",
-            "/api/traitements/**",
-            "/api/consultations/**",
-            "/api/rendezvous/**",
-    };
+		private static final String[] ALLOWED_PATHS_USER = {
+		            "/api/rendezvous/**",
+		            "/api/dossiersMedicaux/**",
+		    };
+		private static final String[] ALLOWED_PATHS_ADMIN = {
+	            "/api/medecins/**",
+	            "/api/diagnostics/**",
+	            "/api/patients/**",
+	            "/api/dossiersMedicaux/**",
+	            "/api/traitements/**",
+	            "/api/consultations/**",
+	            "/api/rendezvous/**",
+	    };
 
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
