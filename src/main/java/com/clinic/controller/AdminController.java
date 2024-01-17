@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class AdminController {
     
+    // Endpoint pour accéder au niveau d'administration
     @GetMapping("/")
-    public String helloAdmineController(){
+    public String helloAdminController(){
         return "Admin level access";
     }
-
 }

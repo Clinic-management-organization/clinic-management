@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/patients")
 public class PatientController {
 
+    // Déclaration d'une instance de PatientMetier pour gérer les opérations métier
     private final PatientMetier patientMetier;
 
     @Autowired
@@ -24,12 +25,14 @@ public class PatientController {
         this.patientMetier = patientMetier;
     }
 
+    // Endpoint pour enregistrer un nouveau patient
     @PostMapping
     public ResponseEntity<Patient> savePatient(@RequestBody Patient patient) {
         Patient savedPatient = patientMetier.savePatient(patient);
         return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
     }
 
+    // Endpoint pour obtenir un patient par son identifiant
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable Long id) {
         try {
@@ -40,12 +43,14 @@ public class PatientController {
         }
     }
 
+    // Endpoint pour obtenir la liste de tous les patients
     @GetMapping
     public ResponseEntity<List<Patient>> getAllPatients() {
         List<Patient> patients = patientMetier.getAllPatients();
         return new ResponseEntity<>(patients, HttpStatus.OK);
     }
 
+    // Endpoint pour mettre à jour un patient existant
     @PutMapping("/update/{id}")
     public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
         try {
@@ -57,6 +62,7 @@ public class PatientController {
         }
     }
 
+    // Endpoint pour supprimer un patient par son identifiant
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         try {
@@ -66,18 +72,19 @@ public class PatientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    // Endpoint pour rechercher des patients en fonction de certains critères
     @GetMapping("/search")
     public List<Patient> searchPatients(
             @RequestParam(required = false) String nom,
             @RequestParam(required = false) String prenom,
             @RequestParam(required = false) String tel,
             @RequestParam(required = false) GenderType sexe) {
-        // If no parameters are provided, return all patients
+        // Si aucun paramètre n'est fourni, retourne tous les patients
         if (nom == null && prenom == null && tel == null && sexe == null) {
             return patientMetier.getAllPatients();
         }
-        // Call your service method with the search parameters
+        // Appeler la méthode de service avec les paramètres de recherche
         return patientMetier.searchPatients(nom, prenom, tel, sexe);
     }
-
 }
