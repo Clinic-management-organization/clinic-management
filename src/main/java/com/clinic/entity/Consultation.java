@@ -37,11 +37,12 @@ public class Consultation implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "prix",nullable = false)
     private float prix;
     
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_creation")
+    @Column(name = "date_creation",nullable = false)
     private Date dateCreation;
 
     @Column(columnDefinition = "TEXT") //Cette colonne permettra au médecin de saisir des remarques ou une synthèse liée à la consultation

@@ -119,5 +119,4 @@ public class SecurityConfig{
         jwtConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return jwtConverter;
     }
-    
 }

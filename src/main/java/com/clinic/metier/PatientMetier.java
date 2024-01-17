@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface PatientMetier {
 
+    // Opérations de base sur les patients
     Patient savePatient(Patient patient);
 
     Patient getPatientById(Long id);
@@ -17,6 +18,7 @@ public interface PatientMetier {
     Patient updatePatient(Patient patient);
 
     void deletePatient(Long id);
-    
-    public List<Patient> searchPatients(String nom , String prenom, String tel ,GenderType sexe ) ;
+
+    // Méthode de recherche de patients
+    List<Patient> searchPatients(String nom, String prenom, String tel, GenderType sexe);
 }
