@@ -7,6 +7,7 @@ import com.clinic.metier.TraitementMetier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,4 +52,30 @@ public class TraitementMetierImpl implements TraitementMetier {
             traitementDAO.deleteById(id);
         }
     }
+
+	@Override
+	public List<Traitement> getTraitementsByDossierMedical(Long dossierMedicalId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigDecimal calculateTotalCost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BigDecimal calculateMonthlyCost(int year, int month) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Object[]> getMonthlyCost() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }
