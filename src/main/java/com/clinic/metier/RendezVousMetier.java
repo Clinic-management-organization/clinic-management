@@ -1,16 +1,10 @@
 package com.clinic.metier;
 
-import com.clinic.entity.Consultation;
-import com.clinic.entity.Patient;
 import com.clinic.entity.RendezVous;
 import com.clinic.entity.Enum.EtatRDV;
-import com.clinic.entity.Enum.GenderType;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.data.repository.query.Param;
 
 public interface RendezVousMetier {
 
@@ -76,6 +70,8 @@ public interface RendezVousMetier {
     List<Object[]> countRendezVousByMonth();
     
     List<RendezVous> getRendezVousByPatient(Long patientID);
+
+	List<RendezVous> getRendezVousByMedecin(Long medecinId);
 
 
 

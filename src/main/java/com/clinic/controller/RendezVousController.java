@@ -48,8 +48,9 @@ public class RendezVousController {
     public List<RendezVous> getRendezVousByMedecin(@PathVariable Long medecinId) {
         return rendezVousMetier.getRendezVousByMedecin(medecinId);
     }
-   
+
     // Endpoint pour obtenir tous les rendez-vous d'un patient
+
     @GetMapping("/patient/{patientId}")
     public List<RendezVous> getRendezVousByPatient(@PathVariable Long patientId) {
         return rendezVousMetier.getRendezVousByPatient(patientId);

@@ -32,10 +32,10 @@ public class Diagnostic {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "category",nullable = false)
+    @Column(name = "category")
     private String category; 
 
-    @Column(name = "maladie",nullable = false)
+    @Column(name = "maladie")
     private String maladie; 
     
     @Column(name = "diagnosticConfirmé")
