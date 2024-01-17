@@ -39,11 +39,11 @@ public class DossierMedical implements Serializable {
     private Long id;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_creation", updatable = false)
+    @Column(name = "date_creation", updatable = false,nullable = false)
     private Date dateCreation;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_MAJ", updatable = false)
+    @Column(name = "date_MAJ", updatable = false,nullable = false)
     private Date dateMiseAJour;
     @Column(name = "observation")
     private String observation;
@@ -51,8 +51,7 @@ public class DossierMedical implements Serializable {
     @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
     private List<Consultation> consultations = new ArrayList<>();
     
-    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)
-    
+    @OneToMany(mappedBy = "dossierMedical", cascade = CascadeType.ALL)    
     private List<RendezVous> rdvs = new ArrayList<>();
 
 }

@@ -28,20 +28,21 @@ public class Traitement {
     @Column(name = "id")
     private Long id;
 
-   
-    @Column(name = "medicament")
+
+
+    @Column(name = "medicament",nullable = false)
     private String medicament; 
 
-    @Column(name = "dosage")
+    @Column(name = "dosage",nullable = false)
     private String dosage; 
 
     @Column(name = "instructions")
     private String instructions;
 
-    @Column(name = "startDate")
+    @Column(name = "startDate",nullable = false)
     private LocalDate startDate; 
 
-    @Column(name = "endDate")
+    @Column(name = "endDate",nullable = false)
     private LocalDate endDate; 
     
     @ManyToOne

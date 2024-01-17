@@ -32,10 +32,11 @@ public class RendezVous implements Serializable{
     private Long id;
 
 
+    @Column(name = "etatRendezVous",nullable = false)
     @Enumerated(EnumType.STRING)
     private EtatRDV etatRendezVous;
 
-    
+    @Column(name = "dateRendezVous",nullable = false)
     private Date dateRendezVous; // date de la rendez vous par jour et heure
 
     
@@ -50,7 +51,6 @@ public class RendezVous implements Serializable{
     
     @ManyToOne
     @JoinColumn(name = "medecin_id")
-    
     private Medecin medecin;
     
     @ManyToOne
