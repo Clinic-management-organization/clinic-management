@@ -39,16 +39,15 @@ public class RendezVous implements Serializable{
     @Column(name = "dateRendezVous",nullable = false)
     private Date dateRendezVous; // date de la rendez vous par jour et heure
 
-    
-    @ManyToOne
-    @JoinColumn(name = "patient_id") 
-    private Patient patient;
-
     @Column(columnDefinition = "TEXT")
     private String remarques;
 
     private String motif; // Motif du rendez-vous 
     
+    @ManyToOne
+    @JoinColumn(name = "patient_id") 
+    private Patient patient;
+
     @ManyToOne
     @JoinColumn(name = "medecin_id")
     private Medecin medecin;

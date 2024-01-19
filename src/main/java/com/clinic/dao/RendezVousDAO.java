@@ -54,6 +54,7 @@ public interface RendezVousDAO extends JpaRepository<RendezVous, Long> {
      *
      * @return La liste des compteurs de rendez-vous par mois et année.
      */
-    @Query(value = "SELECT MONTH(r.date_Rendez_Vous) as `month`, YEAR(r.date_Rendez_Vous) as `year`, COUNT(r.id) as count FROM Rendez_Vous r GROUP BY  `year`, `month`", nativeQuery = true)
+    @Query(value = "SELECT MONTH(r.date_Rendez_Vous) as `month`, YEAR(r.date_Rendez_Vous) as `year`, SUM(1) as count FROM Rendez_Vous r GROUP BY `year`, `month`", nativeQuery = true)
     List<Object[]> countRendezVousByMonth();
+
 }

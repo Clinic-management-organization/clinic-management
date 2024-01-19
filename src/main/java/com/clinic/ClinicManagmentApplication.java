@@ -106,30 +106,30 @@ public class ClinicManagmentApplication {
 
         RendezVous rdv = new RendezVous();
         		rdv.setDateRendezVous(new Date());
-        		rdv.setEtatRendezVous(EtatRDV.RAPPORTEE);
+        		rdv.setEtatRendezVous(EtatRDV.CONFIRMEE);
         		rdv.setMedecin(medecin1);
         		rdv.setPatient(patient1);
        RendezVous rdv2 = new RendezVous();
          		rdv2.setDateRendezVous(new Date());
-         		rdv2.setEtatRendezVous(EtatRDV.RAPPORTEE);
+         		rdv2.setEtatRendezVous(EtatRDV.ANNULEE);
          		rdv2.setMedecin(medecin1);
          		rdv2.setPatient(patient2);
        RendezVous rdv3 = new RendezVous();
 		       rdv3.setDateRendezVous(new Date());
-		       rdv3.setEtatRendezVous(EtatRDV.RAPPORTEE);
+		       rdv3.setEtatRendezVous(EtatRDV.ANNULEE);
 		       rdv3.setMedecin(medecin2);
 		       rdv3.setPatient(patient2);
 		       
 		       
 		       RendezVous rdv4 = new RendezVous();
 		       rdv4.setDateRendezVous(new Date());
-		       rdv4.setEtatRendezVous(EtatRDV.RAPPORTEE);
+		       rdv4.setEtatRendezVous(EtatRDV.CONFIRMEE);
 		       rdv4.setMedecin(medecin1);
 		       rdv4.setPatient(patient1);
 
 		       RendezVous rdv5 = new RendezVous();
 		       rdv5.setDateRendezVous(new Date());
-		       rdv5.setEtatRendezVous(EtatRDV.RAPPORTEE);
+		       rdv5.setEtatRendezVous(EtatRDV.ANNULEE);
 		       rdv5.setMedecin(medecin2);
 		       rdv5.setPatient(patient2);
 
@@ -167,7 +167,7 @@ public class ClinicManagmentApplication {
 		        Consultation consultation3 = new Consultation();
 		        consultation3.setDossierMedical(dm2);
 		        consultation3.setPrix(70);
-		        consultation3.setDateCreation(parseDate("2023-12-17")); 
+		        consultation3.setDateCreation(parseDate("2024-12-17")); 
 		        consultation3.setSynthese("Consultation prévue");
 
 
@@ -335,7 +335,7 @@ public class ClinicManagmentApplication {
        
 	
 	@Bean
-	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO,PatientDAO patientDAO, PasswordEncoder passwordEncode){
+	CommandLineRunner run(RoleDAO roleDAO, UserDAO userDAO,DossierMedicalDAO dmDAO,RendezVousDAO rdvDAO,MedecinDAO medecinDAO, PatientDAO patientDAO, PasswordEncoder passwordEncode){
 		return args ->{
 			if(roleDAO.findByAuthority("ADMIN").isPresent()) return;
 			
@@ -358,13 +358,52 @@ public class ClinicManagmentApplication {
 				patient1.setRole(RoleType.PATIENT);
 				patient1.setSituationFamilliale("single");
 				patient1.setRDVs(null);   // Set the list of RDVs
-	        
+				
+				Medecin medecin1 = new Medecin() ;
+				medecin1.setNom("wrimi");
+				medecin1.setPrenom("siwar");
+				medecin1.setDateNaissance(new Date());
+                medecin1.setSexe(GenderType.H);
+                medecin1.setAdresse("123 Main St");
+                medecin1.setTel("123456789");
+                medecin1.setEmail("john.doe@example.com");
+                medecin1.setRole(RoleType.MEDECIN);
+                medecin1.setSpecialite(SpecialiteType.DERMATOLOGIE);
+                medecin1.setHoraires(null);  // Set the list of horaires
+                medecin1.setRDVs(null);   // Set the list of RDVs
+        
+                DossierMedical dossierMedical3 = new DossierMedical();
+ 		       dossierMedical3.setConsultations(null);
+ 		       dossierMedical3.setDateCreation(new Date());
+ 		       dossierMedical3.setDateMiseAJour(new Date());
+ 		       dossierMedical3.setObservation("Test dossier 3");
+
+                RendezVous rdv4 = new RendezVous();
+ 		       rdv4.setDateRendezVous(new Date());
+ 		       rdv4.setEtatRendezVous(EtatRDV.CONFIRMEE);
+ 		       rdv4.setMedecin(medecin1);
+ 		       rdv4.setPatient(patient1);
+ 		      rdv4.setDossierMedical(dossierMedical3);
+
+ 		       RendezVous rdv5 = new RendezVous();
+ 		       rdv5.setDateRendezVous(new Date());
+ 		       rdv5.setEtatRendezVous(EtatRDV.CONFIRMEE);
+ 		       rdv5.setMedecin(medecin1);
+ 		       rdv5.setPatient(patient1);
+ 		      rdv5.setDossierMedical(dossierMedical3);
+
 			ApplicationUser admin = new ApplicationUser(1, "admin@gmail.com", passwordEncode.encode("password"), adminRoles);
 			ApplicationUser user = new ApplicationUser(2, "user@gmail.com", passwordEncode.encode("password"), userRoles );
 			user.setPatient(patient1);
 			patientDAO.save(patient1);
 			userDAO.save(admin);
 			userDAO.save(user);
+			medecinDAO.save(medecin1);
+		    dmDAO.save(dossierMedical3);
+			rdvDAO.save(rdv4);
+			rdvDAO.save(rdv5);
+		      
+			
 		};
 	}
 
