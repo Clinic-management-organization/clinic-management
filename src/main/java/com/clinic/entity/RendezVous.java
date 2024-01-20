@@ -34,7 +34,7 @@ public class RendezVous implements Serializable{
     private Long id;
 
 
-    @Column(name = "etatRendezVous",nullable = false)
+    @Column(name = "etatRendezVous")
     @Enumerated(EnumType.STRING)
     private EtatRDV etatRendezVous;
 
@@ -44,7 +44,6 @@ public class RendezVous implements Serializable{
 
     @Column(columnDefinition = "TEXT")
     private String remarques;
-
     private String motif; // Motif du rendez-vous 
     
     @ManyToOne
