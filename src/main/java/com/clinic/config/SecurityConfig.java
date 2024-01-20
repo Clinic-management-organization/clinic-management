@@ -68,6 +68,7 @@ public class SecurityConfig{
 	private static final String[] ALLOWED_PATHS_USER = {
 	            "/api/rendezvous/**",
 	            "/api/dossiersMedicaux/**",
+	            "/api/medecins/**",
 	};
 	
 	// Chemins d'accès autorisés seulement pour les admins
