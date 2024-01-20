@@ -17,6 +17,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +38,8 @@ public class RendezVous implements Serializable{
     @Enumerated(EnumType.STRING)
     private EtatRDV etatRendezVous;
 
-    @Column(name = "dateRendezVous",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "dateRendezVous")
     private Date dateRendezVous; // date de la rendez vous par jour et heure
 
     @Column(columnDefinition = "TEXT")
