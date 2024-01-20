@@ -63,9 +63,11 @@ public class ClinicManagmentApplication {
         DossierMedical dm2 = createDossierMedical("Test dossier 2");
 
         // Define the specific dates for Consultation objects
-        Date specificDate1 = parseDate("2023-06-15");
-        Date specificDate2 = parseDate("2023-03-16");
-        Date specificDate3 = parseDate("2024-12-17");
+        Date specificDate1 = parseDate("2024-06-15");
+        Date specificDate2 = parseDate("2024-03-16");
+        Date specificDate3 = parseDate("2023-12-17");
+        Date specificDate4 = parseDate("2022-12-17");
+        Date specificDate5 = parseDate("2022-12-19");
 
         // Create and save sample Consultation objects with specific dates
         Consultation c1 = createConsultation(dm1, specificDate1, "consultation terminée", 50);
@@ -86,8 +88,8 @@ public class ClinicManagmentApplication {
         RendezVous rdv = createRendezVous(specificDate1, EtatRDV.CONFIRMEE, medecin1, patient1, dm2);
         RendezVous rdv2 = createRendezVous(specificDate2, EtatRDV.ANNULEE, medecin1, patient2, dm1);
         RendezVous rdv3 = createRendezVous(specificDate3, EtatRDV.ANNULEE, medecin2, patient2, dm1);
-        RendezVous rdv4 = createRendezVous(specificDate2, EtatRDV.CONFIRMEE, medecin1, patient1, dm2);
-        RendezVous rdv5 = createRendezVous(specificDate1, EtatRDV.ANNULEE, medecin2, patient2, dm2);
+        RendezVous rdv4 = createRendezVous(specificDate4, EtatRDV.CONFIRMEE, medecin1, patient1, dm2);
+        RendezVous rdv5 = createRendezVous(specificDate5, EtatRDV.ANNULEE, medecin2, patient2, dm2);
 
         // Save objects to the database using DAOs
         MedecinDAO medecinDAO = ctx.getBean(MedecinDAO.class);
